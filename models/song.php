@@ -19,6 +19,19 @@ class Song extends Model
 		return $res_array;
 	}
 	
+	function getAllSongs()
+	{
+		$qry = "SELECT * FROM songs";
+		$res = mysql_query($qry);
+		$res_array = Database::resultToArray($res);
+		if (DEBUG) 
+		{
+			echo "$qry returned results: <br>"
+			print_r($res_array);			
+		}
+		return $res_array;
+	}
+	
 	function getSongByNameArtistAndAlbum($name,$artist_id,$album_name)
 	{	
 		$name = mysql_real_escape_string($name);

@@ -43,7 +43,23 @@ class User extends Model {
 
 	function getSongsLikedBy($user_id) {
 		$cUserId = (int)$user_id;
-		$sql = "SELECT * FROM users_liking_songs WHERE user_id=$cUserId";
+		$sql = "SELECT * FROM users_liking_songs us"
+			." LEFT JOIN songs s "
+				." ON us.song_name=s.song_name AND us.album_name = s.album_name AND us.artist_id = s.artist_id "
+			." LEFT JOIN albums a "
+				." ON a.album_name = us.album_name AND a.artist_id=us.artist_id "
+			." LEFT JOIN artists ar "
+				." ON ar.album_name = us.album_name AND ar.artist_id=a.artist_id "
+			." WHERE user_id=$cUserId";
 		$qry = mysql_query($sql);
 		return Database::resultToArray($qry);
+	}
+
+	function getGenresLikedBy($user_id) {
+		$cUserId = (int)$user_id;
+		$sql = "SELECT * FROM users_liking_genres ug LEFT JOIN genres g ON ug.genre_id=g.genre_id WHERE user_id=$cUserId";
+		$qry = mysql_query($sql);
+		return Database::resultToArray($qry);
+
+	}
 }

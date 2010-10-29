@@ -12,7 +12,7 @@ class Artist extends Model
 		$res_array = Database::resultToArray($res);
 		if (DEBUG) 
 		{
-			echo "$qry  returned results: <br>"
+			echo "$qry  returned results: <br>";
 			print_r($res_array);			
 		}
 		return $res_array;
@@ -29,10 +29,24 @@ class Artist extends Model
 		$res_array = Database::resultToArray($res);
 		if (DEBUG) 
 		{
-			echo "$qry  returned results: <br>"
+			echo "$qry  returned results: <br>";
 			print_r($res_array);			
 		}
 		return $res_array;
+		
+	}
+	
+	function addGenreToArtist($genre_name,$artist_id)
+	{
+		$genre_name = mysql_real_escape_string($genre_name);
+		$artist_id = mysql_real_escape_string($artist_id);
+		
+		$qry = "INSERT INTO `artists_playing_genres` (artist_id,genre_name) VALUES($artist_id,$genre_name)";
+		$res = mysql_query($qry);
+		if (DEBUG)
+		{
+			echo "Inserting with query: $qry <br>";
+		}
 		
 	}
 	

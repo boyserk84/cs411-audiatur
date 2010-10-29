@@ -18,7 +18,7 @@ define('DEBUG',							true);
 define('MYSQL_SERVER', 					'localhost');
 define('MYSQL_USERNAME', 				'root');
 define('MYSQL_PASSWORD', 				'');
-define('MYSQL_DATABASE', 				'webmonkeys');
+define('MYSQL_DATABASE', 				'audiatur');
 
 
 

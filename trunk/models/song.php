@@ -1,7 +1,7 @@
 <?php
 
-require_once('include/model.php');
-require_once('include/database.php');
+require_once('includes/model.php');
+require_once('includes/database.php');
 
 class Song extends Model 
 {
@@ -37,7 +37,7 @@ class Song extends Model
 		$name = mysql_real_escape_string($name);
 		$name = mysql_real_escape_string($artist_id);
 		$name = mysql_real_escape_string($album_name);
-		$qry = "SELECT * FROM songs WHERE name='$name' AND artist_id = $artist_id AND album_name = '$album_name'";
+		$qry = "SELECT * FROM songs LEFT JOIN artists ON songs.artist_id = artists.id WHERE song_name='$name' AND artist_id = $artist_id AND album_name = '$album_name'";
 		$res = mysql_query($qry);
 		$res_row = Database::resultToRow($res);
 		if (DEBUG) 
@@ -45,7 +45,7 @@ class Song extends Model
 			echo "$qry returned results: <br>";
 			print_r($res_row);
 		}
-		return $res_array;
+		return $res_row;
 	
 	}
 

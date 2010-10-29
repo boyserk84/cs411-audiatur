@@ -1,7 +1,7 @@
 <?php
 
-require_once('include/model.php');
-require_once('include/database.php');
+require_once('includes/model.php');
+require_once('includes/database.php');
 
 class Genre extends Model 
 {

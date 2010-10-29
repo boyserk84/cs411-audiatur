@@ -12,7 +12,7 @@ class Genre extends Model
 		$res_array = Database::resultToArray($res);
 		if (DEBUG) 
 		{
-			echo "$qry returned results: <br>"
+			echo "$qry returned results: <br>";
 			print_r($res_array);			
 		}
 		return $res_array;

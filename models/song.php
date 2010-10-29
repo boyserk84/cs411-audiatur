@@ -13,7 +13,7 @@ class Song extends Model
 		$res_array = Database::resultToArray($res);
 		if (DEBUG) 
 		{
-			echo "$qry returned results: <br>"
+			echo "$qry returned results: <br>";
 			print_r($res_array);			
 		}
 		return $res_array;
@@ -26,7 +26,7 @@ class Song extends Model
 		$res_array = Database::resultToArray($res);
 		if (DEBUG) 
 		{
-			echo "$qry returned results: <br>"
+			echo "$qry returned results: <br>";
 			print_r($res_array);			
 		}
 		return $res_array;
@@ -37,7 +37,7 @@ class Song extends Model
 		$name = mysql_real_escape_string($name);
 		$name = mysql_real_escape_string($artist_id);
 		$name = mysql_real_escape_string($album_name);
-		$qry = "SELECT * FROM songs WHERE name='$name' AND artist_id = $artist_id AND album_name = '$album_name'"
+		$qry = "SELECT * FROM songs WHERE name='$name' AND artist_id = $artist_id AND album_name = '$album_name'";
 		$res = mysql_query($qry);
 		$res_row = Database::resultToRow($res);
 		if (DEBUG) 

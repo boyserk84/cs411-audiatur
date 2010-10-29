@@ -20,6 +20,7 @@ class Artist extends Model
 	
 	function getArtistById($id)
 	{	
+		$id = mysql_real_escape_string($id);
 		$qry = "SELECT * FROM artists WHERE id=$id";
 		$res = mysql_query($qry);
 		$res_row = Database::resultToRow($res);

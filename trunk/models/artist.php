@@ -75,7 +75,7 @@ class Artist extends Model
 		$cDescription = mysql_real_escape_string($data['description']);
 		$cYearFounded = (int)($data['year_founded']);
 		$sql = "INSERT INTO artists (name, description, year_founded) VALUES ('$cName', '$cDescription', $cYearFounded)";
-		
+	
 		mysql_query($sql) or die($sql . "-->" . mysql_error());
 	}
 

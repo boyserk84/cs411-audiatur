@@ -5,9 +5,17 @@ require 'includes/global.php';
 class EditArtistsPage extends Page {
 	function handleActions() {
 		if (array_key_exists('add', $_POST)) {
-			Artist::insertFromPost();	
+			$errors = Artist::insertFromPost();	
 		} elseif (array_key_exists('edit', $_POST)) {
-			Artist::updateFromPost();
+			$errors = Artist::updateFromPost();
+		}
+
+		if (sizeof($errors) > 0) {
+			echo "<div class='errorbox'>Please correct the following errors:<ul>"
+			foreach ($errors as $error) {
+				echo "<li>" . $error;	
+			}
+			echo "</ul></div>
 		}
 	}
 

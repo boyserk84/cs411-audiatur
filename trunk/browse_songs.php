@@ -21,7 +21,18 @@ class BrowseSongsPage extends Page {
 
 		foreach ($songs as $song) {
 			?>
-				
+			
+			<tr>
+				<td>
+				<?php echo $song['song_name']; ?>
+				</td>
+				<td>
+				<?php echo $song['album_name']; ?>
+				</td>
+				<td>
+				<?php echo $song['artist_name']; ?>
+				</td>
+			</tr>
 
 			<?php
 		}

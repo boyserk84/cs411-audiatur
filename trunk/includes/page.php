@@ -40,5 +40,12 @@ class Page {
 		$this->content();
 		$this->footer();
 	}
+	
+	function printError($error) {
+	echo "<div style='width:50%;border:1px dashed red;background:#FFFFCC'>$error</div>";
+	
+	}
+	
+	
 }
 

@@ -12,7 +12,7 @@ if (file_exists('includes/config.mine.php')) {
 
 
 
-define('DEBUG',							true);
+define('DEBUG',							false);
 
 
 define('MYSQL_SERVER', 					'localhost');

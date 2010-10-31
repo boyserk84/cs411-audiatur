@@ -1,12 +1,13 @@
 <?php
 
-require 'includes/global.php'
-require 'models/song.php'
+require_once('includes/global.php');
+require_once('includes/page.php');
+require_once('models/song.php');
 
 class BrowseSongsPage extends Page {
 	function content() {
 		// Todo: add search parameters & pagination
-		$songs = Song::getAll();
+		$songs = Song::getAllSongs();
 
 		?>
 	
@@ -30,7 +31,9 @@ class BrowseSongsPage extends Page {
 				<?php echo $song['album_name']; ?>
 				</td>
 				<td>
-				<?php echo $song['artist_name']; ?>
+				<?php 
+				//at the moment, this field is not properly named when retrieved. Need to fix query
+				echo $song['name']; ?>
 				</td>
 			</tr>
 
@@ -45,3 +48,6 @@ class BrowseSongsPage extends Page {
 		<?php
 	}
 }
+
+$b = new BrowseSongsPage();
+$b->render();

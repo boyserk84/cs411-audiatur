@@ -22,7 +22,7 @@ class Artist extends Model
 	{
 		$id = mysql_real_escape_string($id);
 		$qry = "SELECT * FROM genres LEFT JOIN artists_playing_genres 
-				ON genres.genre_name = artists_playing_genres.genre_name
+				ON genres.name = artists_playing_genres.genre_name
 				WHERE artist_id = $id";
 		
 		$res = mysql_query($qry);
@@ -34,6 +34,19 @@ class Artist extends Model
 		}
 		return $res_array;
 		
+	}
+	
+	function getAlbumsOfArtist($id)
+	{
+		$qry = "SELECT * FROM albums LEFT JOIN artists ON artists.id = albums.artist_id WHERE artists.id = $id";
+		$res = mysql_query($qry);
+		$res_array = Database::resultToArray($res);
+		if (DEBUG) 
+		{
+			echo "$qry  returned results: <br>";
+			print_r($res_array);			
+		}
+		return $res_array;
 	}
 	
 	function addGenreToArtist($genre_name,$artist_id)
@@ -61,7 +74,7 @@ class Artist extends Model
 			echo "$qry  returned results: <br>";
 			print_r($res_row);
 		}
-		return $res_array;
+		return $res_row;
 	
 	}
 

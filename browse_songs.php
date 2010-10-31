@@ -25,14 +25,17 @@ class BrowseSongsPage extends Page {
 			
 			<tr>
 				<td>
-				<?php echo $song['song_name']; ?>
+				<a href='view_song.php?song_name=<?php echo $song['song_name']; ?>&album_name=<?php echo $song['album_name']; ?>&artist_id=<?php echo $song['artist_id']; ?>'>
+				<?php echo $song['song_name']; ?></a>
 				</td>
 				<td>
-				<?php echo $song['album_name']; ?>
+				<a href='view_album.php?album_name=<?php echo $song['album_name']; ?>&artist_id=<?php echo $song['artist_id']; ?>'>
+				<?php echo $song['album_name']; ?></a>
 				</td>
 				<td>
 				<?php 
-				//at the moment, this field is not properly named when retrieved. Need to fix query
+				//Artist Name
+				// - at the moment, this field is not properly named when retrieved. Need to fix query
 				echo $song['name']; ?>
 				</td>
 			</tr>

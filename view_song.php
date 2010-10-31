@@ -10,11 +10,26 @@ class ViewSong extends Page
 
 	function content()
 	{
+	
+	
+		if (!isset($_GET['song_name']) || !isset($_GET['album_name']) || !isset($_GET['artist_id']))
+		{
+			Page::printError("One or more required identifiers is missing. You may have reached this page in error.");
+			return;
+		}	
+		
+		
 		$song_name = strip_tags($_GET['song_name']);
 		$album_name = strip_tags($_GET['album_name']);
 		$artist_id = strip_tags($_GET['artist_id']);
 		
+		
 		$row = Song::getSongByNameArtistAndAlbum($song_name,$artist_id,$album_name);
+		if (empty($row))
+		{
+			Page::printError("The song you are looking for does not exist - you may have reached this page in error.");
+			return;
+		}
 		
 		?>
 		<h1><?php echo $song_name; ?></h1>

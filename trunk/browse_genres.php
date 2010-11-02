@@ -5,6 +5,8 @@ require_once('includes/page.php');
 require_once('models/genre.php');
 
 class BrowseGenresPage extends Page {
+
+	var $title = "Browse Genres";
 	function content() {
 		// Todo: add search parameters & pagination
 		$genres = Genre::getAll();

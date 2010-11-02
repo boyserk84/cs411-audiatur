@@ -6,7 +6,11 @@ body, html {
 }
 
 h1 {
-	
+	color:#00CC99;
+}
+
+h2 {
+	color:#00CC99;
 }
 
 div.linkbox {
@@ -28,5 +32,14 @@ a:hover
 	color:#66FF99;
 }
 
+table.browse
+{
+	width:850px;
+}
+
+table.browse th
+{
+	text-align:left;
+}
 
 

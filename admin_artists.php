@@ -5,14 +5,22 @@ require 'includes/page.php';
 require 'includes/form.php';
 
 require 'models/artist.php';
+require 'models/album.php';
+
+define('ACTION_DEFAULT', 1);
+define('ACTION_ARTIST', 2);
+
 
 class EditArtistsPage extends Page {
 	function handleActions() {		
 		$errors = array();
+		$action = ACTION_DEFAULT;
 		if (array_key_exists('add', $_POST)) {			
-			$errors = Artist::insertFromPost();				
-		} elseif (array_key_exists('edit', $_POST)) {
-			$errors = Artist::updateFromPost();
+			$errors = Artist::insertFromPost();	
+			$action = ACTION_DEFAULT;			
+		} elseif (array_key_exists('edit', $_GET)) {
+		//	$errors = Artist::updateFromPost();
+			$action = ACTION_ARTIST;
 		}
 
 		if (sizeof($errors) > 0) {
@@ -22,10 +30,65 @@ class EditArtistsPage extends Page {
 			}
 			echo "</ul></div>";
 		}
+
+		return $action;
 	}
 
 	function content() {	
-		EditArtistsPage::handleActions();
+		$action = EditArtistsPage::handleActions();
+		
+		if ($action == ACTION_DEFAULT) {
+			EditArtistsPage::manage();
+		} elseif ($action == ACTION_ARTIST) {
+			EditArtistsPage::edit((int)$_GET['edit']);
+		}
+	}		
+
+	function edit($id) {
+		$artist = Artist::getByArtistId($id);
+		$albums = Album::getAllForArtist($id);
+	
+		?>
+		<h1>Edit Artist <?php echo $artist['name']; ?></h1>
+		
+		<h2>Albums:</h2>
+		<table>
+		<tr>
+			<th>Album Name</th>
+			<th>Release Date</th>
+			<th>Options</th>
+		</tr>
+		<?php
+	
+		foreach ($albums as $album) {
+			?>
+		<tr>
+			<td><?php echo $album['album_name']; ?></td>
+			<td><?php echo $album['release_date']; ?></td>
+			<td><a href='admin_albums.php?edit=<?php echo $album['album_name']; ?>'></td>
+		</tr>
+			<?php
+			
+		}
+
+		?>
+		</table>
+		<?php
+	}
+
+	function manage() {
+
+		echo "<h1>Add New Artist</h1>";		
+		
+		// Print the add-artist form.
+		start_form('');
+		hidden_field('add', true);
+		text_field("Artist name:", 'artist_name');
+		text_field("Description:", 'description');
+		text_field("Year founded:", 'year_founded');
+		submit_button('Add Artist');
+		close_form();
+
 	
 		echo "<h1>Manage Artists</h1>";
 
@@ -60,16 +123,6 @@ class EditArtistsPage extends Page {
 		</table>
 		<?php
 		
-		echo "<h1>Add New Artist</h1>";		
-		
-		// Print the add-artist form.
-		start_form('');
-		hidden_field('add', true);
-		text_field("Artist name:", 'artist_name');
-		text_field("Description:", 'description');
-		text_field("Year founded:", 'year_founded');
-		submit_button('Add Artist');
-		close_form();
 
 	}
 }

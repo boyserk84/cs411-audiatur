@@ -21,7 +21,7 @@ class Song extends Model
 	
 	function getAllSongs()
 	{
-		$qry = "SELECT * FROM songs LEFT JOIN artists ON songs.artist_id = artists.id LEFT JOIN albums ON artists.id = albums.artist_id";
+		$qry = "SELECT * FROM songs LEFT JOIN artists ON songs.artist_id = artists.id LEFT JOIN albums ON songs.album_name = albums.album_name AND songs.artist_id = albums.artist_id";
 		$res = mysql_query($qry);
 		$res_array = Database::resultToArray($res);
 		if (DEBUG) 

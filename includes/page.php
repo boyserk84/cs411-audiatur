@@ -10,12 +10,12 @@ class Page {
 		?>
 <html>
 	<head>
-		<title>ACM Webmonkeys</title>
+		<title>Audiatur</title>
 		<link rel='stylesheet' href='css/main.css' />
 	</head>
 	<body>
-		<h1>ACM Webmonkeys</h1>
-		<a href='welcome.php'>Home</a> <a href='members.php'>Members</a> <a href='tutorials.php'>Tutorials</a> <a href='projects.php'>Projects</a> <a href='contact.php'>Contact</a>
+		<h1>Audiatur - A Music Database</h1>
+		<div class='linkbox'><a href='index.php'>Home</a> <a href='browse_songs.php'>Browse Songs</a> <a href='browse_albums.php'>Browse Albums</a> <a href='browse_artists.php'>Browse Artists</a>  <a href='browse_genres.php'>Browse Genres</a> <a href='account.php'>My Account</a> <a href='about.php'>About</a></div>
 		
 		
 		

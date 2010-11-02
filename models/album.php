@@ -6,7 +6,7 @@ require_once('includes/database.php');
 class Album extends Model 
 {
 	function getAll() {
-		$sql = "SELECT * FROM albums";
+		$sql = "SELECT artists.name AS artist_name, albums.* FROM albums LEFT JOIN artists ON albums.artist_id=artists.id";
 		$qry = mysql_query($sql);
 		return Database::resultToArray($qry);
 	}

@@ -5,6 +5,9 @@ require_once('includes/page.php');
 require_once('models/song.php');
 
 class BrowseSongsPage extends Page {
+	
+	var $title = "Browse Songs";
+
 	function content() {
 		// Todo: add search parameters & pagination
 		$songs = Song::getAllSongs();

@@ -1,6 +1,8 @@
 body, html {
 	font-family:Verdana;	
-	background:#AAEEAA;
+	background:#FFFFFF;
+	margin-top:0px;
+
 }
 
 h1 {
@@ -9,10 +11,22 @@ h1 {
 
 div.linkbox {
 	padding:10px;
-	border:2px solid #66AA66;
+	border:2px solid #88BB88;
 }
 
-href {
+div.topheader {
+	background:#FFFFFF;
+}
+
+a {	
 	text-decoration:none;
-
+	color:#888888;
 }
+
+a:hover
+{
+	color:#66FF99;
+}
+
+
+

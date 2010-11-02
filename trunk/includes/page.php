@@ -4,6 +4,7 @@
  */
  
 class Page {
+	var $title = "";
 	// Print the header.
 	function header() {
 		// This is the fast way to print HTML:
@@ -14,10 +15,12 @@ class Page {
 		<link rel='stylesheet' href='css/main.css' />
 	</head>
 	<body>
-		<h1>Audiatur - A Music Database</h1>
-		<div class='linkbox'><a href='index.php'>Home</a> <a href='browse_songs.php'>Browse Songs</a> <a href='browse_albums.php'>Browse Albums</a> <a href='browse_artists.php'>Browse Artists</a>  <a href='browse_genres.php'>Browse Genres</a> <a href='account.php'>My Account</a> <a href='about.php'>About</a></div>
+		<div class='topheader'>
+			<img src='img/audiatur_logo.png'>
+			<div class='linkbox'><a href='index.php'>Home</a> | <a href='browse_songs.php'>Browse Songs</a> | <a href='browse_albums.php'>Browse Albums</a> | <a href='browse_artists.php'>Browse Artists</a> | <a href='browse_genres.php'>Browse Genres</a> | <a href='account.php'>My Account</a> | <a href='about.php'>About</a></div>
+		</div>
 		
-		
+		<h1><?php echo $this->title; ?></h1>
 		
 		<?php
 	}

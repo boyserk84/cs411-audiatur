@@ -5,6 +5,9 @@ require_once('includes/page.php');
 require_once('models/album.php');
 
 class BrowseSongsPage extends Page {
+
+	var $title = "Browse Albums";
+	
 	function content() {
 		// Todo: add search parameters & pagination
 		$albums = Album::getAll();

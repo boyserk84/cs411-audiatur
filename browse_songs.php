@@ -14,7 +14,7 @@ class BrowseSongsPage extends Page {
 
 		?>
 	
-		<table>
+		<table class='browse'>
 			<tr>
 				<th>Song Name</th>
 				<th>Album</th>
@@ -36,10 +36,8 @@ class BrowseSongsPage extends Page {
 				<?php echo $song['album_name']; ?></a>
 				</td>
 				<td>
-				<?php 
-				//Artist Name
-				// - at the moment, this field is not properly named when retrieved. Need to fix query
-				echo $song['name']; ?>
+				<a href='view_artist.php?artist_id=<?php echo $song['artist_id']; ?>'><?php echo $song['name']; ?></a>				
+				
 				</td>
 			</tr>
 

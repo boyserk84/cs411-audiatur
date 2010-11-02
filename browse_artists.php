@@ -5,13 +5,15 @@ require_once('includes/page.php');
 require_once('models/artist.php');
 
 class BrowseArtistsPage extends Page {
+	var $title = "Browse Artists";
+
 	function content() {
 		// Todo: add search parameters & pagination
 		$artists = Artist::getAll();
 
 		?>
 	
-		<table>
+		<table class='browse'>
 			<tr>				
 				<th>Artist Name</th>
 				<th>Year Founded</th>

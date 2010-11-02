@@ -5,7 +5,7 @@ require_once('includes/database.php');
 
 class Genre extends Model 
 {
-	function getAllGenres()
+	function getAll()
 	{
 		$qry = "SELECT * FROM genres";
 		$res = mysql_query($qry);

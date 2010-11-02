@@ -5,7 +5,7 @@ require_once('includes/database.php');
 
 class Artist extends Model 
 {
-	function getAllArtists()
+	function getAll()
 	{
 		$qry = "SELECT * FROM artists";
 		$res = mysql_query($qry);
@@ -84,22 +84,28 @@ class Artist extends Model
 	}
 
 	function insertFromData($data) {
-		$cName = mysql_real_escape_string($data['year_founded']);
+		$cName = mysql_real_escape_string($data['artist_name']);
 		$cDescription = mysql_real_escape_string($data['description']);
 		$cYearFounded = (int)($data['year_founded']);
-		$sql = "INSERT INTO artists (name, description, year_founded) VALUES ('$cName', '$cDescription', $cYearFounded)";
+		$sql = "INSERT INTO artists (name, description, founded_in) VALUES ('$cName', '$cDescription', $cYearFounded)";
 	
 		mysql_query($sql) or die($sql . "-->" . mysql_error());
+		
+		// Todo: do validation.
+		return array();
 	}
 
 	function updateFromData($data) {
 		$id = (int)($data['artist_id']);
-		$cName = mysql_real_escape_string($data['year_founded']);
+		$cName = mysql_real_escape_string($data['artist_name']);
 		$cDescription = mysql_real_escape_string($data['description']);
 		$cYearFounded = (int)($data['year_founded']);
-		$sql = "UPDATE artists SET (name='$cName', description='$cDescription', year_founded='$cYearFounded') WHERE id=$id LIMIT 1";
+		$sql = "UPDATE artists SET (name='$cName', description='$cDescription', founded_in='$cYearFounded') WHERE id=$id LIMIT 1";
 		
 		mysql_query($sql) or die($sql . "-->" . mysql_error());
+		
+		// Todo: do validation.
+		return array();
 	}
 }
 

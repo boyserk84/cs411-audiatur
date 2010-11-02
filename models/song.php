@@ -36,9 +36,11 @@ class Song extends Model
 	function getSongByNameArtistAndAlbum($name,$artist_id,$album_name)
 	{	
 		$name = mysql_real_escape_string($name);
-		$name = mysql_real_escape_string($artist_id);
-		$name = mysql_real_escape_string($album_name);
-		$qry = "SELECT * FROM songs LEFT JOIN artists ON songs.artist_id = artists.id WHERE song_name='$name' AND artist_id = $artist_id AND album_name = '$album_name'";
+		$artist_id = (int)($artist_id);
+		$album_name = mysql_real_escape_string($album_name);
+		$qry = "SELECT * FROM songs LEFT JOIN artists ON songs.artist_id = artists.id"
+				." LEFT JOIN albums ON songs.album_name = albums.album_name AND albums.artist_id=songs.artist_id"
+				." WHERE song_name='$name' AND songs.artist_id = $artist_id AND songs.album_name = '$album_name'";
 		$res = mysql_query($qry);
 		$res_row = Database::resultToRow($res);
 		if (DEBUG) 

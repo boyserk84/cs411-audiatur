@@ -2,7 +2,7 @@
 /* Helper methods to create forms. */
 
 function start_form($action) {
-	echo "<form action='$action'>";
+	echo "<form action='$action' method='post'>";
 	echo "<table class='genericForm'>";
 }
 
@@ -21,7 +21,7 @@ function hidden_field($name, $val) {
 	echo "<input type=hidden name='$name' value='$val'/>";
 }
 
-function submit_buttom($label) {
+function submit_button($label) {
 	echo "<tr><td colspan=2 align=center><input type=submit value='$label'></td></tr>";
 }
 

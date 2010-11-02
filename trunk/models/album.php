@@ -11,6 +11,13 @@ class Album extends Model
 		return Database::resultToArray($qry);
 	}
 
+	function getAllForArtist($artist_id) {
+		$cArtistId = (int)$artist_id;
+		$sql = "SELECT artists.name AS artist_name, albums.* FROM albums LEFT JOIN artists ON albums.artist_id=artists.id WHERE artist_id=$cArtistId";
+		$qry = mysql_query($sql);
+		return Database::resultToArray($qry);
+	}	
+
 	function getByNameAndArtist($album_name, $artist_id) {
 		$cArtistId = (int)$artist_id;
 		$cAlbumName = mysql_real_escape_string($album_name);

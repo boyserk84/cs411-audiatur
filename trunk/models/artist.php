@@ -18,6 +18,13 @@ class Artist extends Model
 		return $res_array;
 	}
 	
+	function getByArtistId($id) {
+		$id = (int)$id;
+		$sql = "SELECT * FROM artists WHERE id=$id";
+		$qry = mysql_query($sql) or die(mysql_error());
+		return (Database::resultToRow($qry));
+	}
+
 	function getGenresOfArtist($id)
 	{
 		$id = mysql_real_escape_string($id);

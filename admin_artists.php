@@ -65,7 +65,7 @@ class EditArtistsPage extends Page {
 		<tr>
 			<td><?php echo $album['album_name']; ?></td>
 			<td><?php echo $album['release_date']; ?></td>
-			<td><a href='admin_albums.php?edit=<?php echo $album['album_name']; ?>&artist_id=<?php echo $id?>'></td>
+			<td><a href='admin_albums.php?edit=<?php echo $album['album_name']; ?>&artist_id=<?php echo $id?>'>Edit</td>
 		</tr>
 			<?php
 			

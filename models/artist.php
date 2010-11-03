@@ -107,7 +107,7 @@ class Artist extends Model
 		$cName = mysql_real_escape_string($data['artist_name']);
 		$cDescription = mysql_real_escape_string($data['description']);
 		$cYearFounded = (int)($data['year_founded']);
-		$sql = "UPDATE artists SET (name='$cName', description='$cDescription', founded_in='$cYearFounded') WHERE id=$id LIMIT 1";
+		$sql = "UPDATE artists SET name='$cName', description='$cDescription', founded_in='$cYearFounded' WHERE id=$id LIMIT 1";
 		
 		mysql_query($sql) or die($sql . "-->" . mysql_error());
 		

@@ -17,8 +17,13 @@ class EditArtistsPage extends Page {
 		$action = ACTION_DEFAULT;
 		if (array_key_exists('add', $_POST)) {			
 			$errors = Artist::insertFromPost();	
-			$action = ACTION_DEFAULT;			
-		} elseif (array_key_exists('edit', $_GET)) {
+			$action = ACTION_DEFAULT;
+		}elseif (array_key_exists('add_album', $_POST))
+		{
+			$errors = Album::insertFromPost();
+			$action = ACTION_ARTIST;
+		}
+		 elseif (array_key_exists('edit', $_GET)) {
 		//	$errors = Artist::updateFromPost();
 			$action = ACTION_ARTIST;
 		}
@@ -49,7 +54,21 @@ class EditArtistsPage extends Page {
 		$albums = Album::getAllForArtist($id);
 	
 		?>
-		<h1>Edit Artist <?php echo $artist['name']; ?></h1>
+		<h1><?php echo $artist['name']; ?></h1>
+		<?php
+		echo "<h1>Add New Album</h1>";		
+	 	
+		// Print the add-artist form.
+		start_form('');
+		hidden_field('add_album', true);
+		hidden_field('artist_id',$id);
+		text_field("Album name:", 'album_name');
+		text_field("Release date:", 'release_date');
+		submit_button('Add Album');
+		close_form();
+
+		
+		?>
 		
 		<h2>Albums:</h2>
 		<table>

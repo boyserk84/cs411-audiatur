@@ -37,6 +37,44 @@ class Album extends Model
 		return Database::resultToArray($qry);
 	}
 	
+		function insertFromPost() {
+		Album::insertFromData($_POST);
+	}
+
+	function updateFromPost() {
+	//	Album::updateFromData($_POST);
+	}
+
+	function insertFromData($data) {
+		$cName = mysql_real_escape_string($data['album_name']);
+		$cDate = mysql_real_escape_string($data['release_date']);
+		$cArtistId = (int)($data['artist_id']);
+
+		$sql = "INSERT INTO albums (album_name, release_date, artist_id) VALUES ('$cName', '$cDate', $cArtistId)";
+
+		mysql_query($sql) or die($sql . "-->" . mysql_error());
+		
+		// Todo: do validation.
+		return array();
+	}
+
+	function updateFromData($data) {
+	/*
+		$cName = mysql_real_escape_string($data['song_name']);
+		$cDuration = mysql_real_escape_string($data['duration']);
+		$cArtistId = (int)($data['artist_id']);
+		$cAlbumName = mysql_real_escape_string($data['album_name']);
+		$cOldSongName = mysql_real_escape_string($data['old_name']);
+		$sql = "UPDATE songs SET song_name='$cName', duration='$cDuration' WHERE artist_id=$cArtistId AND album_name='$cAlbumName' AND song_name='$cOldSongName' LIMIT 1";
+		
+		mysql_query($sql) or die($sql . "-->" . mysql_error());
+		
+		// Todo: do validation.
+		return array();
+		*/
+	}
+
+
 }
 
 

@@ -1,5 +1,5 @@
 body, html {
-	font-family:Verdana;	
+	font-family:Verdana, Arial, Helvetica, Sans Serif;	
 	background:#FFFFFF;
 	margin-top:0px;
 
@@ -20,6 +20,16 @@ div.linkbox {
 
 div.topheader {
 	background:#FFFFFF;
+	position:relative;
+}
+
+div.loginbox {
+	float:right;
+	border:1px dashed gray;
+	margin:5px;
+	width:200px;
+	height:100px;
+	padding:5px;
 }
 
 a {	

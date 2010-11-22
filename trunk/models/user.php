@@ -12,8 +12,9 @@ class User extends Model {
 
 	function getUserByInformation($username, $password) {
 		$cUsername = mysql_real_escape_string($username);
-		$cPasswordHash = md5($username);
-		$sql = "SELECT * FROM users WHERE username='$cUsername' AND password='$cPasswordHash'";
+		$cPasswordHash = md5($password);
+		$sql = "SELECT * FROM users WHERE user_name='$cUsername' AND password='$cPasswordHash'";
+
 		$qry = mysql_query($sql);
 
 		// If a record was returned, return it. Otherwise, return false to indicate auth failure.
@@ -24,6 +25,16 @@ class User extends Model {
 		}
 	}	
 
+	function createUserFromArray($data) {
+		$cUsername = mysql_real_escape_string($data['username']);
+		$cPassword = md5($data['password']);
+		$cEmail = mysql_real_escape_string($data['email']);
+
+		$sql = "INSERT INTO users (user_name, email, password) VALUES ('$cUsername', '$cEmail', '$cPassword')";
+		$qry = mysql_query($sql);
+
+		return User::getUserByInformation($data['username'], $data['password']);
+	}	
 
 	function getArtistsLikedBy($user_id) {
 		$cUserId = (int)$user_id;

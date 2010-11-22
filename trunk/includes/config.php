@@ -6,6 +6,8 @@
  * do not version it).
  */
 
+error_reporting(E_ERROR);
+
 if (file_exists('includes/config.mine.php')) {
 	include 'includes/config.mine.php';
 }
@@ -16,9 +18,12 @@ define('DEBUG',							false);
 
 
 define('MYSQL_SERVER', 					'localhost');
-define('MYSQL_USERNAME', 				'root');
-define('MYSQL_PASSWORD', 				'');
-define('MYSQL_DATABASE', 				'audiatur');
+if (!defined('MYSQL_USERNAME'))
+	define('MYSQL_USERNAME', 				'root');
+if (!defined('MYSQL_PASSWORD'))
+	define('MYSQL_PASSWORD', 				'');
+if (!defined('MYSQL_DATABASE'))
+	define('MYSQL_DATABASE', 				'audiatur');	
 
 
 

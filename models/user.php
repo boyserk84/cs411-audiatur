@@ -68,16 +68,17 @@ class User extends Model {
 
 	function getGenresLikedBy($user_id) {
 		$cUserId = (int)$user_id;
-		$sql = "SELECT * FROM users_liking_genres ug LEFT JOIN genres g ON ug.genre_id=g.genre_id WHERE user_id=$cUserId";
+		$sql = "SELECT * FROM users_liking_genres ug LEFT JOIN genres g ON ug.genre_name=g.name WHERE user_id=$cUserId";
 		$qry = mysql_query($sql);
 		return Database::resultToArray($qry);
 
 	}
 
-	function likeGenre($user_id, $genre_id) {
+	function likeGenre($user_id, $name) {
 		$cUserId = (int)$user_id;
-		$cGenreID = (int)$genre_id;
-		$sql = "INSERT INTO users_liking_genres ug (user_id, genre_id) VALUES ($cUserId, $cGenreId)";
+		$cName = mysql_real_escape_string($name);
+		$cRating = (int)$rating;
+		$sql = "INSERT INTO users_liking_genres (user_id, genre_name) VALUES ($cUserId, '$cName')";
 		return mysql_query($sql);
 	}
 

@@ -21,7 +21,7 @@ class Genre extends Model
 	function getGenreByGenreName($name)
 	{	
 		$name = mysql_real_escape_string($name);
-		$qry = "SELECT * FROM genres WHERE genre_name=$name";
+		$qry = "SELECT * FROM genres WHERE name='$name'";
 		$res = mysql_query($qry);
 		$res_row = Database::resultToRow($res);
 		if (DEBUG) 
@@ -29,7 +29,7 @@ class Genre extends Model
 			echo "$qry  returned results: <br>";
 			print_r($res_row);
 		}
-		return $res_array;
+		return $res_row;
 	
 	}
 

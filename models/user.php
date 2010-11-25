@@ -81,10 +81,11 @@ class User extends Model {
 		return mysql_query($sql);
 	}
 
-	function likeArtist($user_id, $artist_id) {
+	function likeArtist($user_id, $artist_id, $rating) {
 		$cUserId = (int)$user_id;
 		$cArtistID = (int)$artist_id;
-		$sql = "INSERT INTO users_liking_artists ua (user_id, artist_id) VALUES ($cUserId, $cArtistId)";
+		$cRating = (int)$rating;
+		$sql = "INSERT INTO users_liking_artists (user_id, artist_id, rating) VALUES ($cUserId, $cArtistID, $cRating)";
 		return mysql_query($sql);
 	}
 

@@ -11,10 +11,6 @@ class BrowseSongsPage extends Page {
 	function content() {
 		// Todo: add search parameters & pagination
 		$songs = Song::getAllSongs();
-		if (array_key_exists('username', $_SESSION))
-			$songs_like = User::getSongsLikedBy($_SESSION['userid']);
-		else
-			$songs_like = $songs;
 		
 		if (array_key_exists('like_song', $_GET) || array_key_exists('love_song', $_GET))
 		{
@@ -46,6 +42,11 @@ class BrowseSongsPage extends Page {
 			else
 				User::likeSong($_SESSION['userid'], $artist_id, $album_name, $song_name, 2);
 		}
+		
+		if (array_key_exists('username', $_SESSION))
+			$songs_like = User::getSongsLikedBy($_SESSION['userid']);
+		else
+			$songs_like = $songs;
 		
 		?>
 	

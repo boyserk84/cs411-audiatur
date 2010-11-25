@@ -24,6 +24,7 @@ if (!array_key_exists('username', $_SESSION)) {
 		if ($u) {
 			$loggedIn = true;
 			$_SESSION['username'] = $u['user_name'];
+			$_SESSION['userid'] = $u['user_id'];
 		}
 	}
 } else {
@@ -32,6 +33,7 @@ if (!array_key_exists('username', $_SESSION)) {
 
 	if (array_key_exists('logout', $_GET)) {
 		unset($_SESSION['username']);
+		unset($_SESSION['userid']);
 		$loggedIn = false;
 	}
 }

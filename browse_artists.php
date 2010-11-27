@@ -97,10 +97,10 @@ class BrowseArtistsPage extends Page {
 					if(!$liked){
 					?>
 				<td>
-				<a href='?like_artist&artist_id=<?php echo $artist['id']; ?>'>Like</a>
+				<?php makeButton('artist','like',$artist['id']); ?>
 				</td>
 				<td>
-				<a href='?love_artist&artist_id=<?php echo $artist['id']; ?>'>Love</a>
+				<?php makeButton('artist','love',$artist['id']); ?>
 				</td>
 				<?php
 					}

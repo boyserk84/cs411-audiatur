@@ -83,10 +83,10 @@ class BrowseSongsPage extends Page {
 					if(!$liked){
 					?>
 				<td>
-				<a href='?like_song&song_name=<?php echo $song['song_name']; ?>&album_name=<?php echo $song['album_name']; ?>&artist_id=<?php echo $song['artist_id']; ?>'>Like</a>
+				<a href='?like_song&song_name=<?php echo $song['song_name']; ?>&album_name=<?php echo $song['album_name']; ?>&artist_id=<?php echo $song['artist_id']; ?>'><img src="img/like_button.png" /></a>
 				</td>
 				<td>
-				<a href='?love_song&song_name=<?php echo $song['song_name']; ?>&album_name=<?php echo $song['album_name']; ?>&artist_id=<?php echo $song['artist_id']; ?>'>Love</a>
+				<a href='?love_song&song_name=<?php echo $song['song_name']; ?>&album_name=<?php echo $song['album_name']; ?>&artist_id=<?php echo $song['artist_id']; ?>'><img src="img/love_button.png" /></a>
 				</td>
 				<?php
 					}

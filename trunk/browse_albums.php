@@ -98,10 +98,10 @@ class BrowseSongsPage extends Page {
 					if(!$liked){
 					?>
 				<td>
-				<a href='?like_album&album_name=<?php echo urlencode($album['album_name']); ?>&artist_id=<?php echo $album['artist_id']; ?>'>Like</a>
+					<?php makeButton('album','like',$album['artist_id'],$album['album_name']); ?>
 				</td>
 				<td>
-				<a href='?love_album&album_name=<?php echo urlencode($album['album_name']); ?>&artist_id=<?php echo $album['artist_id']; ?>'>Love</a>
+					<?php makeButton('album','love',$album['artist_id'],$album['album_name']); ?>
 				</td>
 				<?php
 					}

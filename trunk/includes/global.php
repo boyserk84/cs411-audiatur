@@ -10,6 +10,11 @@ require_once 'includes/database.php';
 
 require_once 'models/user.php';
 
+// To be moved out later.
+function cleanSongName($str) {
+	return strip_tags(preg_replace('/^\d+\.?/',"",trim($str)));
+}
+
 // Open up the database connection.
 Database::initialize();
 

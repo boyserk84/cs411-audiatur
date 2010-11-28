@@ -79,10 +79,13 @@ class BrowseArtistsPage extends Page {
 
 		foreach ($artists as $artist) {
 			$liked = false;
-			foreach ($artists_like as $artist_like) {
-				if($artist_like['artist_id'] == $artist['id'])
-					$liked = true;
+			if (array_key_exists('userid', $_SESSION)) {				
+				foreach ($artists_like as $artist_like) {
+					if($artist_like['artist_id'] == $artist['id']) {
+						$liked = true;
+					}
 				}
+			}
 			?>
 			
 			<tr>

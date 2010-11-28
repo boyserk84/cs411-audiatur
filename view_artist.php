@@ -33,7 +33,7 @@ class ViewArtist extends Page
 		
 		?>
 		<h1><?php echo $row['name']; ?></h1>
-		<h3>Description:</h3><p><?php echo $row['description']; ?>
+		<h3>Description:</h3><p><?php echo strtr($row['description'], array('&ldquo'=>'"', '&rdquo'=>'"', '&lsquo' => "'", '&rsquo' => "'")); ?>
 		<h3>Genres:</h3>
 		<p>
 		<?php
@@ -54,7 +54,7 @@ class ViewArtist extends Page
 			
 			<tr>
 				<td>
-				<a href='view_album.php?album_name=<?php echo $album['album_name']; ?>&artist_id=<?php echo $artist_id; ?>'>
+				<a href='view_album.php?album_name=<?php echo urlencode($album['album_name']); ?>&artist_id=<?php echo $artist_id; ?>'>
 				<?php echo $album['album_name']; ?></a>
 				</td>				
 			</tr>

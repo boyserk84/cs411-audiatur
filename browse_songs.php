@@ -69,15 +69,15 @@ class BrowseSongsPage extends Page {
 			
 			<tr>
 				<td>
-				<a href='view_song.php?song_name=<?php echo $song['song_name']; ?>&album_name=<?php echo $song['album_name']; ?>&artist_id=<?php echo $song['artist_id']; ?>'>
-				<?php echo $song['song_name']; ?></a>
+				<a href='view_song.php?song_name=<?php echo urlencode($song['song_name']); ?>&album_name=<?php echo urlencode($song['album_name']); ?>&artist_id=<?php echo $song['artist_id']; ?>'>
+				<?php echo cleanSongName($song['song_name']); ?></a>
 				</td>
 				<td>
-				<a href='view_album.php?album_name=<?php echo $song['album_name']; ?>&artist_id=<?php echo $song['artist_id']; ?>'>
+				<a href='view_album.php?album_name=<?php echo urlencode($song['album_name']); ?>&artist_id=<?php echo $song['artist_id']; ?>'>
 				<?php echo $song['album_name']; ?></a>
 				</td>
 				<td>
-				<a href='view_artist.php?artist_id=<?php echo $song['artist_id']; ?>'><?php echo $song['name']; ?></a>				
+				<a href='view_artist.php?artist_id=<?php echo urlencode($song['artist_id']); ?>'><?php echo $song['name']; ?></a>				
 				</td>
 				<?php
 					if(!$liked){

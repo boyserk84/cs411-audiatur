@@ -40,7 +40,7 @@ class BrowseGenresPage extends Page {
 		if (array_key_exists('username', $_SESSION))
 			$genres_like = User::getGenresLikedBy($_SESSION['userid']);
 		else
-			$genres_like = $genres;
+			$genres_like = array();
 		?>
 	
 		<table>
@@ -53,7 +53,7 @@ class BrowseGenresPage extends Page {
 		foreach ($genres as $genre) {
 			$liked = false;
 			foreach ($genres_like as $genre_like) {
-				if($genre_like['genre_name'] == $genre['name'])
+				if($genre_like['name'] == $genre['name'])
 					$liked = true;
 				}
 			?>

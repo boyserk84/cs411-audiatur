@@ -68,6 +68,7 @@ if (!array_key_exists('username', $_SESSION)) {
 		unset($_SESSION['username']);
 		unset($_SESSION['userid']);
 		$loggedIn = false;
+		session_destroy();
 	}
 }
 

@@ -48,8 +48,8 @@ class ViewAlbum extends Page
 			
 			<tr>
 				<td>
-				<a href='view_song.php?song_name=<?php echo $song['song_name']; ?>&album_name=<?php echo $song['album_name']; ?>&artist_id=<?php echo $song['artist_id']; ?>'>
-				<?php echo $song['song_name']; ?></a>
+				<a href='view_song.php?song_name=<?php echo urlencode($song['song_name']); ?>&album_name=<?php echo urlencode($song['album_name']); ?>&artist_id=<?php echo $song['artist_id']; ?>'>
+				<?php echo cleanSongName($song['song_name']); ?></a>
 				</td>				
 			</tr>
 

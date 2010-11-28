@@ -4,7 +4,7 @@ require_once('includes/global.php');
 require_once('includes/page.php');
 require_once('models/album.php');
 
-class BrowseSongsPage extends Page {
+class BrowseAlbumsPage extends Page {
 
 	var $title = "Browse Albums";
 	
@@ -76,16 +76,19 @@ class BrowseSongsPage extends Page {
 
 		foreach ($albums as $album) {
 			$liked = false;
-			foreach ($albums_like as $album_like) {
-				if($album_like['album_name'] == $album['album_name'])
-					$liked = true;
+			if (array_key_exists('userid', $_SESSION)) {
+				foreach ($albums_like as $album_like) {
+					if($album_like['album_name'] == $album['album_name']) {
+						$liked = true;
+					}
 				}
+			}
 			?>
 			
 			<tr>
 				<td>
-				<a href='view_album.php?album_name=<?php echo $album['album_name']; ?>&artist_id=<?php echo $album['artist_id']; ?>'>
-				<?php echo $album['album_name']; ?></a>
+				<a href='view_album.php?album_name=<?php echo urlencode($album['album_name']); ?>&artist_id=<?php echo $album['artist_id']; ?>'>
+				<?php echo ($album['album_name']); ?></a>
 				</td>
 				<td>
 				<?php 
@@ -129,5 +132,5 @@ class BrowseSongsPage extends Page {
 	}
 }
 
-$b = new BrowseSongsPage();
+$b = new BrowseAlbumsPage();
 $b->render();

@@ -66,6 +66,60 @@ class ViewArtist extends Page
 		</table>
 		
 		<?php
+		if(isset($_POST['like']) || isset($_POST['love'])) {
+			if(isset($_POST['like']))
+				User::likeArtist($_SESSION['userid'], $artist_id, 1);
+			else
+				User::likeArtist($_SESSION['userid'], $artist_id, 2);
+			foreach($albums as $album)
+			{
+				if(isset($_POST['like']))
+					User::likeAlbum($_SESSION['userid'], $artist_id, $album['album_name'], 1);
+				else
+					User::likeAlbum($_SESSION['userid'], $artist_id, $album['album_name'], 2);
+				$songs = Album::getSongsOnAlbum($artist_id,$album['album_name']);
+		
+				foreach ($songs as $song) {
+					if(isset($_POST['like']))
+						User::likeSong($_SESSION['userid'], $artist_id, $album['album_name'], $song['song_name'], 1);
+					else
+						User::likeSong($_SESSION['userid'], $artist_id, $album['album_name'], $song['song_name'], 2);
+				}
+			}
+			
+		}
+		
+		$liked = false;
+		if (array_key_exists('username', $_SESSION))
+		{
+			$artists = User::getArtistsLikedBy($_SESSION['userid']);
+			foreach($artists as $artist)
+			{
+				if($row['id'] == $album['artist_id'])
+					$liked = true;
+			}
+		}
+		
+		if (array_key_exists('username', $_SESSION) && !$liked)
+		{?>
+		<form action='' method="post">
+		<input type="image" SRC='img/like_button.png' name="like" value="Like">
+		</form>
+		<form action='' method="post">
+		<input type="image" SRC='img/love_button.png' name="love" value="Love">
+		</form>
+			<?php
+			
+		}
+		else if(array_key_exists('username', $_SESSION) && $liked)
+		{
+		?>
+		<h4>Liked</h4>
+		<?php
+		}
+		?>
+		
+		<?php
 	}
 
 

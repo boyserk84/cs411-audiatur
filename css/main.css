@@ -1,22 +1,44 @@
 body, html {
-	font-family:Verdana, Arial, Helvetica, Sans Serif;	
-	background:#FFFFFF;
-	margin-top:0px;
+	font-family:Verdana, Arial, Helvetica, Sans Serif;		
+	margin:0px;
+	height:100%;
+}
 
+body {
+	background:url(../img/bg.png) repeat;
+	height:100%;
+	text-align:left;
+}
+
+div.container {
+	background:white;
+	width:900px;
+	height:100%;
+	padding-left:10px;
+	padding-right:10px;
+	border-right:4px solid #C7F66F;
+	border-left:4px solid #C7F66F;
 }
 
 h1 {
-	color:#00CC99;
+	color:#E768AD;
 }
 
 h2 {
-	color:#00CC99;
+	color:#E768AD;
 }
+
+	h2 a {
+		color:#84B22D;
+	}
 
 div.linkbox {
 	padding:10px;
-	border:2px solid #88BB88;
+	border-bottom:1px solid #84B22D;
 }
+	div.linkbox  a {
+		color:#E73A98;
+	}
 
 div.topheader {
 	background:#FFFFFF;

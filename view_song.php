@@ -30,20 +30,23 @@ class ViewSong extends Page
 			return;
 		}
 		
-		if(isset($_POST['like'])) {
-			User::likeSong($_SESSION['userid'], $artist_id, $album_name, $song_name, 1);
+		if(isset($_POST['like']) || isset($_POST['unlove']) || isset($_POST['unlike']) || isset($_POST['love'])) {
+			
+			$degree = 0;
+			if (isset($_POST['like'])) $degree = 1;
+			if (isset($_POST['love'])) $degree = 2;
+			
+			User::likeSong($_SESSION['userid'], $artist_id, $album_name, $song_name, $degree);
 		}
-		if(isset($_POST['love'])) {
-			User::likeSong($_SESSION['userid'], $artist_id, $album_name, $song_name, 2);
-		}
-		$liked = false;
+	
+		$rating = 0;
 		if (array_key_exists('username', $_SESSION))
 		{
 			$songs = User::getSongsLikedBy($_SESSION['userid']);
 			foreach($songs as $song)
 			{
 				if($row['song_name'] == $song['song_name'])
-					$liked = true;
+					$rating = $song['rating'];
 			}
 		}
 		?>
@@ -52,7 +55,7 @@ class ViewSong extends Page
 		<h3>on <a href='view_album.php?artist_id=    <?php echo $artist_id . "&album_name=".$album_name . "'>" . $album_name; ?></a></h3>
 		<p>Duration: <?php echo $row['duration']==0 ? "Unknown" : $row['duration']; ?></p>
 		<?php
-		if (array_key_exists('username', $_SESSION) && !$liked)
+		if (array_key_exists('username', $_SESSION) && !$rating)
 		{?>
 		<form action='' method="post">
 		<input type="image" SRC='img/like_button.png' name="like" value="Like">
@@ -63,11 +66,11 @@ class ViewSong extends Page
 			<?php
 			
 		}
-		else if(array_key_exists('username', $_SESSION) && $liked)
+		else if(array_key_exists('username', $_SESSION) && $rating)
 		{
-		?>
-		<h4>Liked</h4>
-		<?php
+		echo ("<table border=0'><tr><td>");
+		showLikeOptionButtons('song',$rating,$row['artist_id'],$row['album_name'],$row['song_name'],true);
+		echo ("</td></tr></table>");
 		}
 		?>
 		

@@ -59,34 +59,37 @@ class ViewAlbum extends Page
 		?>
 		</table>
 		<?php
-		if(isset($_POST['like']) || isset($_POST['love'])) {
-			if(isset($_POST['like']))
-				User::likeAlbum($_SESSION['userid'], $artist_id, $album_name, 1);
-			else
-				User::likeAlbum($_SESSION['userid'], $artist_id, $album_name, 2);
+		if(isset($_POST['like']) || isset($_POST['love']) || isset($_POST['unlike']) || isset($_POST['unlove']))
+		{
+		
+		$degree = 0;
+		if (isset($_POST['like'])) $degree = 1;
+		if (isset($_POST['love'])) $degree = 2;
+		
+			User::likeAlbum($_SESSION['userid'], $artist_id, $album_name, $degree);
+			
 			foreach($songs as $song)
 			{
-				if(isset($_POST['like']))
-					User::likeSong($_SESSION['userid'], $artist_id, $album_name, $song['song_name'], 1);
-				else
-					User::likeSong($_SESSION['userid'], $artist_id, $album_name, $song['song_name'], 2);
+				User::likeSong($_SESSION['userid'], $artist_id, $album_name, $song['song_name'], $degree);			
 			}
 			
 		}
+
 		
-		$liked = false;
+		$rating = 0;
 		if (array_key_exists('username', $_SESSION))
 		{
 			$albums = User::getAlbumsLikedBy($_SESSION['userid']);
 			foreach($albums as $album)
 			{
 				if($row['album_name'] == $album['album_name'])
-					$liked = true;
+					$rating = $album['rating'];
 			}
-		}
-		
-		if (array_key_exists('username', $_SESSION) && !$liked)
-		{?>
+		}		
+	
+		if (array_key_exists('username', $_SESSION) && $rating == 0)
+		{
+		?>
 		<form action='' method="post">
 		<input type="image" SRC='img/like_button.png' name="like" value="Like">
 		</form>
@@ -96,11 +99,12 @@ class ViewAlbum extends Page
 			<?php
 			
 		}
-		else if(array_key_exists('username', $_SESSION) && $liked)
+		elseif (array_key_exists('username', $_SESSION) && $rating != 0)
 		{
-		?>
-		<h4>Liked</h4>
-		<?php
+			echo ("<table border=0><tr><td>");
+			showLikeOptionButtons('album',$rating,$album['artist_id'],$album['album_name'],null,true);
+			echo ("</td></tr></table>");			
+		
 		}
 		?>
 		<?php

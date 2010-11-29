@@ -84,7 +84,7 @@ class BrowseArtistsPage extends Page {
 			$rating = 0;
 			if (array_key_exists('userid', $_SESSION)) {				
 				foreach ($artists_like as $artist_like) {
-					print_r($artist_like);
+				
 					if($artist_like['artist_id'] == $artist['id'])
 					{
 						$rating = $artist_like['rating'];

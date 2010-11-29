@@ -42,7 +42,7 @@ function makeButton($type='song',$degree='like',$artist_id=NULL,$album_name=NULL
 
 }
 
-function showLikeOptionButtons($type='song',$rating=1,$artist_id=NULL,$album_name=NULL,$song_name=NULL)
+function showLikeOptionButtons($type='song',$rating=1,$artist_id=NULL,$album_name=NULL,$song_name=NULL,$useForm=false)
 {
 
 	//Nothing, Liked or Loved?
@@ -60,11 +60,24 @@ function showLikeOptionButtons($type='song',$rating=1,$artist_id=NULL,$album_nam
 	}
 
 	//Song, Album, or Artist? Add relevant info.
+	if ($useForm)
+	{
+		?>
+		<form action='' method="post">
+		<input type="image" SRC='img/<?php echo $degree1; ?>_button.png' name="<?php echo $degree1;?>" value="<?php echo $degree1; ?>">
+		</form>
+		</td><td>
+		<form action='' method="post">
+		<input type="image" SRC='img/<?php echo $degree2; ?>_button.png' name="<?php echo $degree2;?>" value="<?php echo $degree2; ?>">
+		</form>
+		<?php
+		
+		return;
+	}	
+		
 	
 	if ($type == "song")
-	{
-		
-		
+	{		
 		?>
 		<a href='?<?php echo $degree1; ?>_song&song_name=<?php echo $song_name; ?>&album_name=<?php echo $album_name; ?>&artist_id=<?php echo $artist_id; ?>'><img border='0' src="img/<?php echo $degree1; ?>_button.png" /></a>
 		</td><td>

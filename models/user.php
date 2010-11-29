@@ -107,8 +107,7 @@ class User extends Model {
 		$sql .= " ON DUPLICATE KEY ";
 		$sql .= " UPDATE rating = $cRating";
 	
-		
-		echo $sql;
+			
 		return mysql_query($sql);
 	}
 
@@ -123,8 +122,7 @@ class User extends Model {
 
 		$sql = " INSERT INTO users_liking_songs (user_id ,artist_id, album_name, song_name, rating) VALUES ($cUserId ,$cArtistID, '$cAlbumName', '$cSongName', $cRating)";
 		$sql .= "ON DUPLICATE KEY UPDATE rating = $cRating";
-	
-		
+
 		return mysql_query($sql);
 	}
 

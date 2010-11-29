@@ -94,14 +94,11 @@ class BrowseAlbumsPage extends Page {
 			if (array_key_exists('userid', $_SESSION)) {
 				foreach ($albums_like as $album_like) {
 					if($album_like['album_name'] == $album['album_name'] && $album['artist_id'] == $album_like['artist_id']) {
-					$rating = $album_like['rating'];
-					}
-						
+						$rating = $album_like['rating'];
+					}						
 				}
-			}
-		
-			?>
-			
+			}		
+			?>			
 			<tr class='row<?php echo $c = ++$c % 2; ?>'>
 				<td>
 				<a href='view_album.php?album_name=<?php echo urlencode($album['album_name']); ?>&artist_id=<?php echo $album['artist_id']; ?>'>
@@ -115,7 +112,6 @@ class BrowseAlbumsPage extends Page {
 				<?php echo $album['release_date']; ?>
 				</td>
 				<?php
-				echo ("rating is " .$rating);
 					if($rating==0){
 					?>
 				<td>

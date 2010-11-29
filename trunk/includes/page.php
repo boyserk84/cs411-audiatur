@@ -17,6 +17,8 @@ class Page {
 		<link rel='stylesheet' href='css/main.css' />
 	</head>
 	<body>
+		<div align="center">
+		<div class='container' align="left">
 		<div class='topheader'>
 			<div class='loginbox'>
 				<?php if (!$loggedIn) { ?>
@@ -47,9 +49,12 @@ class Page {
 	
 	// Print the footer of the page, wrapping things up.
 	function footer() {		
-		// This is the slow way to print HTML.
-		echo "</body>" . "\n";
-		echo "</html>" . "\n";
+		?>
+		</div>
+		</div>
+	</body>
+</html>
+		<?php
 	}
 	
 	// Render the page.

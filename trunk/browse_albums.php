@@ -62,10 +62,10 @@ class BrowseAlbumsPage extends Page {
 		if (array_key_exists('username', $_SESSION))
 			$albums_like = User::getAlbumsLikedBy($_SESSION['userid']);
 		else
-			$albums_like = $albums;
+			$albums_like = array();
 		?>
 	
-		<table>
+		<table class='browse'>
 			<tr>
 				<th>Album</th>
 				<th>Artist</th>

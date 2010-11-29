@@ -46,7 +46,7 @@ class BrowseSongsPage extends Page {
 		if (array_key_exists('username', $_SESSION))
 			$songs_like = User::getSongsLikedBy($_SESSION['userid']);
 		else
-			$songs_like = $songs;
+			$songs_like = array();
 		
 		?>
 	

@@ -86,7 +86,12 @@ class User extends Model {
 		$cUserId = (int)$user_id;
 		$cArtistID = (int)$artist_id;
 		$cRating = (int)$rating;
-		$sql = "INSERT INTO users_liking_artists (user_id, artist_id, rating) VALUES ($cUserId, $cArtistID, $cRating)";
+		
+		$whereclause = "WHERE user_id = $cUserId AND artist_id = $cArtistID";
+			
+		$sql = " INSERT INTO users_liking_artists (user_id, artist_id, rating) VALUES ($cUserId, $cArtistID, $cRating)";
+		$sql .= " ON DUPLICATE KEY ";
+		$sql .= " UPDATE  rating = $cRating";
 		return mysql_query($sql);
 	}
 
@@ -95,7 +100,15 @@ class User extends Model {
 		$cArtistID = (int)$artist_id;
 		$cAlbumName = mysql_real_escape_string($album_name);
 		$cRating = (int)$rating;
-		$sql = "INSERT INTO users_liking_albums (user_id, artist_id, album_name, rating) VALUES ($cUserId, $cArtistID, '$cAlbumName', $cRating)";
+		
+		$whereclause = "WHERE user_id = $cUserId AND cArtistID = $cArtistID AND album_name = '$cAlbumName'";
+	
+		$sql = " INSERT INTO users_liking_albums (user_id, artist_id, album_name, rating) VALUES ($cUserId, $cArtistID, '$cAlbumName', $cRating)";	
+		$sql .= " ON DUPLICATE KEY ";
+		$sql .= " UPDATE rating = $cRating";
+	
+		
+		echo $sql;
 		return mysql_query($sql);
 	}
 
@@ -105,7 +118,13 @@ class User extends Model {
 		$cAlbumName = mysql_real_escape_string($album_name);
 		$cSongName = mysql_real_escape_string($song_name);
 		$cRating = (int)$rating;
-		$sql = "INSERT INTO users_liking_songs (user_id ,artist_id, album_name, song_name, rating) VALUES ($cUserId ,$cArtistID, '$cAlbumName', '$cSongName', $cRating)";
+		
+		$whereclause = "WHERE user_id = $cUserId AND cArtistID = $cArtistID AND album_name = '$cAlbumName' AND song_name = '$cSongName'";
+
+		$sql = " INSERT INTO users_liking_songs (user_id ,artist_id, album_name, song_name, rating) VALUES ($cUserId ,$cArtistID, '$cAlbumName', '$cSongName', $cRating)";
+		$sql .= "ON DUPLICATE KEY UPDATE rating = $cRating";
+	
+		
 		return mysql_query($sql);
 	}
 

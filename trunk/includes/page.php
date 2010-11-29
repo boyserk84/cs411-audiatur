@@ -34,7 +34,7 @@ class Page {
 				<?php } ?>
 			</div>
 			<img src='img/audiatur_logo.png'>
-			<div class='linkbox'><a href='index.php'>Home</a> | <a href='browse_songs.php'>Browse Songs</a> | <a href='browse_albums.php'>Browse Albums</a> | <a href='browse_artists.php'>Browse Artists</a> | <a href='browse_genres.php'>Browse Genres</a> | <a href='account.php'>My Account</a> | <a href='about.php'>About</a></div>
+			<div class='linkbox'><a href='index.php'>Home</a> | <a href='browse_songs.php'>Browse Songs</a> | <a href='browse_albums.php'>Browse Albums</a> | <a href='browse_artists.php'>Browse Artists</a> | <a href='browse_genres.php'>Browse Genres</a> | <a href='account.php'>My Account</a> | <a href='about.php'>About</a> | <a href='admin_artists.php'>Admin</a> </div>
 		</div>
 		
 		<h2><?php echo $this->title; ?></h2>

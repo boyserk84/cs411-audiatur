@@ -9,6 +9,7 @@ require 'models/album.php';
 
 define('ACTION_DEFAULT', 1);
 define('ACTION_ARTIST', 2);
+define('ACTION_DELETED', 3);
 
 
 class EditArtistsPage extends Page {
@@ -18,18 +19,22 @@ class EditArtistsPage extends Page {
 		if (array_key_exists('add', $_POST)) {			
 			$errors = Artist::insertFromPost();	
 			$action = ACTION_DEFAULT;
-		}elseif (array_key_exists('add_album', $_POST))
-		{
+		}elseif (array_key_exists('add_album', $_POST))	{
 			$errors = Album::insertFromPost();
 			$action = ACTION_ARTIST;
 		}
 		 elseif (array_key_exists('edit', $_GET)) {
-		//	$errors = Artist::updateFromPost();
+			if (array_key_exists('artist_name', $_POST)) {
+				$errors = Artist::updateFromPost();
+			}
 			$action = ACTION_ARTIST;
+		} elseif (array_key_exists('delete', $_GET)) {
+			Artist::delete($_GET['delete']);
+			$action = ACTION_DELETED;
 		}
 
 		if (sizeof($errors) > 0) {
-			echo "<div class='errorbox'>Please correct the following errors:<ul>";
+			echo "<div class='errorbox'><ul>";
 			foreach ($errors as $error) {
 				echo "<li>" . $error;	
 			}
@@ -46,6 +51,8 @@ class EditArtistsPage extends Page {
 			EditArtistsPage::manage();
 		} elseif ($action == ACTION_ARTIST) {
 			EditArtistsPage::edit((int)$_GET['edit']);
+		} elseif ($action == ACTION_DELETED) {
+			echo "This artist has been deleted. <a href='admin_artists.php'>Go back.</a>";
 		}
 	}		
 
@@ -56,6 +63,16 @@ class EditArtistsPage extends Page {
 		?>
 		<h1><?php echo $artist['name']; ?></h1>
 		<?php
+		start_form('');
+		hidden_field('edit', true);
+		hidden_field('artist_id', $artist['id']);
+		text_field("Artist name:", 'artist_name', $artist['name']);
+		text_area("Description:", 'description', $artist['description']);
+		text_field("Year founded:", 'founded_in', $artist['founded_in']);
+		submit_button('Edit Artist');
+		close_form();
+		
+		
 		echo "<h1>Add New Album</h1>";		
 	 	
 		// Print the add-artist form.
@@ -84,7 +101,8 @@ class EditArtistsPage extends Page {
 		<tr>
 			<td><?php echo $album['album_name']; ?></td>
 			<td><?php echo $album['release_date']; ?></td>
-			<td><a href='admin_albums.php?edit=<?php echo urlencode($album['album_name']); ?>&artist_id=<?php echo $id?>'>Edit</td>
+			<td><a href='admin_albums.php?edit=<?php echo urlencode($album['album_name']); ?>&artist_id=<?php echo $id?>'>Edit</a> | 
+			<a href='admin_albums.php?delete=<?php echo urlencode($album['album_name']); ?>&artist_id=<?php echo $id?>'>Delete</a></td>
 		</tr>
 			<?php
 			
@@ -132,7 +150,8 @@ class EditArtistsPage extends Page {
 						<?php echo substr($artist['description'], 0, 100) . (strlen($artist['description'])>100 ? "..." : ""); ?>
 					</td>
 					<td>
-						<a href='admin_artists.php?edit=<?php echo $artist['id'];?>'>Edit</a>
+						<a href='admin_artists.php?edit=<?php echo $artist['id'];?>'>Edit</a> | 
+						<a href='admin_artists.php?delete=<?php echo $artist['id'];?>'>Delete</a>
 					</td>
 				</tr>			
 			<?php		

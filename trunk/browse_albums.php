@@ -124,7 +124,7 @@ class BrowseAlbumsPage extends Page {
 					}
 					else
 					{
-					echo ("<td colspan=2>");
+					echo ("<td colspan>");
 					showLikeOptionButtons('album',$rating,$album['artist_id'],$album['album_name']);
 					echo ("</td>");
 					}

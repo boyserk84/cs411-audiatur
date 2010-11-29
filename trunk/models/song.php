@@ -60,24 +60,25 @@ class Song extends Model
 
 		
 	function insertFromPost() {
-		Song::insertFromData($_POST);
+		return Song::insertFromData($_POST);
 	}
 
 	function updateFromPost() {
-		Song::updateFromData($_POST);
+		return Song::updateFromData($_POST);
 	}
 
 	function insertFromData($data) {
 		$cName = mysql_real_escape_string($data['song_name']);
 		$cDuration = mysql_real_escape_string($data['duration']);
-		$cArtistId = (int)($data['artist_id']);
+		$cArtistId = (int)($data['artist_id']);		
 		$cAlbumName = mysql_real_escape_string($data['album_name']);
 		$sql = "INSERT INTO songs (song_name, duration, artist_id, album_name) VALUES ('$cName', '$cDuration', $cArtistId, '$cAlbumName')";
 	
-		mysql_query($sql) or die($sql . "-->" . mysql_error());
-		
-		// Todo: do validation.
-		return array();
+		if (!mysql_query($sql)) {
+			return array(mysql_error());
+		}
+				
+		return array("Song added successfully.");
 	}
 
 	function updateFromData($data) {
@@ -90,10 +91,17 @@ class Song extends Model
 		
 		mysql_query($sql) or die($sql . "-->" . mysql_error());
 		
-		// Todo: do validation.
-		return array();
+		return array("Song successfully updated.");
 	}
 	
+	function delete($artist_id, $album, $song_name) {		
+		$cArtistId = (int)$artist_id;
+		$cAlbumName = mysql_real_escape_string($album);
+		$cSongName = mysql_real_escape_string($song_name);
+		$sql = "DELETE FROM songs WHERE album_name='$cAlbumName' AND artist_id=$cArtistId AND song_name='$cSongName'";		
+		mysql_query($sql) or die(mysql_error());		
+		
+	}
 }
 
 

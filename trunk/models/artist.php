@@ -5,9 +5,14 @@ require_once('includes/database.php');
 
 class Artist extends Model 
 {
-	function getAll()
+	function getAll($keyword='')
 	{
 		$qry = "SELECT * FROM artists";
+		if ($keyword) {
+			$keyword = mysql_real_escape_string($keyword);
+			$qry .= " WHERE name LIKE '%$keyword%'";
+		}
+		
 		$res = mysql_query($qry);
 		$res_array = Database::resultToArray($res);
 		if (DEBUG) 

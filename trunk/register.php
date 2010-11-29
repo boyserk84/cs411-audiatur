@@ -21,7 +21,8 @@ class RegisterPage extends Page
 			if ($u) {
 				echo "Congratulations! You're now registered as <b>{$_POST['username']}</b>. <a href='index.php'>Go back</a>";
 				$_SESSION['username'] = $_POST['username'];
-				$_SESSION['userid'] = mysql_insert_id();
+				$_SESSION['userid'] = $u['user_id'];
+
 				return;
 
 			} else {

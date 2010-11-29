@@ -19,9 +19,15 @@ class Song extends Model
 		return $res_array;
 	}
 	
-	function getAllSongs()
+	function getAllSongs($keyword='', $start=0, $count=40)
 	{
 		$qry = "SELECT * FROM songs LEFT JOIN artists ON songs.artist_id = artists.id LEFT JOIN albums ON songs.album_name = albums.album_name AND songs.artist_id = albums.artist_id";
+		if ($keyword) {
+			$keyword = mysql_real_escape_string($keyword);
+			$qry .= " WHERE song_name LIKE '%$keyword%'";
+		}
+		$qry .= " LIMIT $start, $count";
+		
 		$res = mysql_query($qry);
 		$res_array = Database::resultToArray($res);
 		if (DEBUG) 

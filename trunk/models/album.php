@@ -5,9 +5,11 @@ require_once('includes/database.php');
 
 class Album extends Model 
 {
-	function getAll() {
-		$sql = "SELECT artists.name AS artist_name, albums.* FROM albums LEFT JOIN artists ON albums.artist_id=artists.id";
-		$qry = mysql_query($sql);
+	function getAll($keyword='', $start=0, $count=40) {
+		$sql = "SELECT artists.name AS artist_name, albums.* FROM albums LEFT JOIN artists ON albums.artist_id=artists.id"
+			. ($keyword = '' ? '' :  ' WHERE albums.album_name LIKE "%' . mysql_real_escape_string($keyword) . '%"')
+			. " LIMIT $start, $count";
+		$qry = mysql_query($sql) or die(mysql_error());
 		return Database::resultToArray($qry);
 	}
 

@@ -50,9 +50,15 @@ class RecommendationEngine {
 
 		// Print out a list of our top $cutoff recommendations.
 		$qry = mysql_query($sql) or die(mysql_error());		
-		while ($row = mysql_fetch_assoc($qry)) {
+		if (mysql_num_rows($qry) > 0) {
+			while ($row = mysql_fetch_assoc($qry)) {
+				?>
+					<a href=''><?php echo cleanSongName($row['song_name']); ?></a> by <a href=''><?php echo $row['artist_name']; ?></a>   <i>(score=<?php echo $row['score']?>)</i><br/>
+				<?php
+			}
+		} else {
 			?>
-				<a href=''><?php echo cleanSongName($row['song_name']); ?></a> by <a href=''><?php echo $row['artist_name']; ?></a>   <i>(score=<?php echo $row['score']?>)</i><br/>
+				Sorry, but at this time we have no recommendations for you. Try liking more songs.
 			<?php
 		}
 	}

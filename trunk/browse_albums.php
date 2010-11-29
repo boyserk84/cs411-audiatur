@@ -9,8 +9,11 @@ class BrowseAlbumsPage extends Page {
 	var $title = "Browse Albums";
 	
 	function content() {
-		// Todo: add search parameters & pagination
-		$albums = Album::getAll();
+		$page = @(int)$_GET['p'];		
+		$countPerPage = 40;
+		$start = $page * $countPerPage;
+		$albums = Album::getAll($_GET['keyword'], $start, $countPerPage);
+		
 		
 		if (array_key_exists('like_album', $_GET) || array_key_exists('love_album', $_GET)
 		|| array_key_exists('unlike_album', $_GET) || array_key_exists('unlove_album', $_GET))
@@ -64,6 +67,19 @@ class BrowseAlbumsPage extends Page {
 			$albums_like = array();
 		?>
 	
+		<form action='' method='get'>
+		Narrow down your results: <input type=text name=keyword value="<?php echo htmlspecialchars(@$_GET['keyword']); ?>"/> <input type=submit value="Go" /> <a href='?'>[Clear]</a>
+		</form>
+		
+		<div align="center" id="pagination">
+			<?php $p = @$_GET['p'] + 1;  ?>
+			<?php if ($p > 0) { ?>
+				<a href='?keyword=<?php echo @$_GET['keyword']; ?>&p=0'>First Page</a>
+				<a href='?keyword=<?php echo @$_GET['keyword']; ?>&p=<?php echo $p - 2; ?>'>Previous Page</a>  <?php } ?>
+			
+			Page <?php echo $p; ?> <a href='?keyword=<?php echo @$_GET['keyword']; ?>&p=<?php echo $p; ?>'>Next Page</a>
+		</div>
+		
 		<table class='browse'>
 			<tr>
 				<th>Album</th>
@@ -86,7 +102,7 @@ class BrowseAlbumsPage extends Page {
 		
 			?>
 			
-			<tr>
+			<tr class='row<?php echo $c = ++$c % 2; ?>'>
 				<td>
 				<a href='view_album.php?album_name=<?php echo urlencode($album['album_name']); ?>&artist_id=<?php echo $album['artist_id']; ?>'>
 				<?php echo ($album['album_name']); ?></a>
@@ -112,7 +128,7 @@ class BrowseAlbumsPage extends Page {
 					}
 					else
 					{
-					echo ("<td>");
+					echo ("<td colspan=2>");
 					showLikeOptionButtons('album',$rating,$album['artist_id'],$album['album_name']);
 					echo ("</td>");
 					}

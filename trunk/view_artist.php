@@ -66,41 +66,42 @@ class ViewArtist extends Page
 		</table>
 		
 		<?php
-		if(isset($_POST['like']) || isset($_POST['love'])) {
-			if(isset($_POST['like']))
-				User::likeArtist($_SESSION['userid'], $artist_id, 1);
-			else
-				User::likeArtist($_SESSION['userid'], $artist_id, 2);
+		if(isset($_POST['like']) || isset($_POST['love']) || isset($_POST['unlike']) || isset($_POST['unlove']))
+		{
+		
+			$degree = 0;
+			if (isset($_POST['like'])) $degree = 1;
+			if (isset($_POST['love'])) $degree = 2;
+			
+			User::likeArtist($_SESSION['userid'], $artist_id, $degree);
+			
 			foreach($albums as $album)
 			{
-				if(isset($_POST['like']))
-					User::likeAlbum($_SESSION['userid'], $artist_id, $album['album_name'], 1);
-				else
-					User::likeAlbum($_SESSION['userid'], $artist_id, $album['album_name'], 2);
+				User::likeAlbum($_SESSION['userid'], $artist_id, $album['album_name'], $degree);
 				$songs = Album::getSongsOnAlbum($artist_id,$album['album_name']);
 		
 				foreach ($songs as $song) {
-					if(isset($_POST['like']))
-						User::likeSong($_SESSION['userid'], $artist_id, $album['album_name'], $song['song_name'], 1);
-					else
-						User::likeSong($_SESSION['userid'], $artist_id, $album['album_name'], $song['song_name'], 2);
+					User::likeSong($_SESSION['userid'], $artist_id, $album['album_name'], $song['song_name'], $degree);
+					
 				}
 			}
 			
 		}
 		
-		$liked = false;
+	
+		
+		$rating = 0;
 		if (array_key_exists('username', $_SESSION))
 		{
 			$artists = User::getArtistsLikedBy($_SESSION['userid']);
 			foreach($artists as $artist)
 			{
-				if($row['id'] == $album['artist_id'])
-					$liked = true;
+				if($row['id'] == $artist['artist_id'])
+					$rating = $artist['rating'];
 			}
 		}
-		
-		if (array_key_exists('username', $_SESSION) && !$liked)
+
+		if (array_key_exists('username', $_SESSION) && !$rating)
 		{?>
 		<form action='' method="post">
 		<input type="image" SRC='img/like_button.png' name="like" value="Like">
@@ -111,11 +112,11 @@ class ViewArtist extends Page
 			<?php
 			
 		}
-		else if(array_key_exists('username', $_SESSION) && $liked)
+		elseif(array_key_exists('username', $_SESSION) && $rating)
 		{
-		?>
-		<h4>Liked</h4>
-		<?php
+			echo ("</table border='0'><tr><td>");
+			showLikeOptionButtons('artist',$rating,$artist['id'],null,null,true);
+			echo ("</td></tr></table>");			
 		}
 		?>
 		

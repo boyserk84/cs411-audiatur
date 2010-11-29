@@ -92,6 +92,7 @@ class User extends Model {
 		$sql = " INSERT INTO users_liking_artists (user_id, artist_id, rating) VALUES ($cUserId, $cArtistID, $cRating)";
 		$sql .= " ON DUPLICATE KEY ";
 		$sql .= " UPDATE  rating = $cRating";
+		
 		return mysql_query($sql);
 	}
 

@@ -15,8 +15,14 @@ class BrowseArtistsPage extends Page {
 			$artists = Artist::getAll();
 		}
 		
-		if (array_key_exists('like_artist', $_GET) || array_key_exists('love_artist', $_GET))
+		if (array_key_exists('like_artist', $_GET) || array_key_exists('love_artist', $_GET)
+		|| array_key_exists('unlike_artist', $_GET) || array_key_exists('unlove_artist', $_GET))
 		{
+		
+			$degree = 0;
+			if (array_key_exists('like_artist', $_GET)) $degree = 1;
+			if (array_key_exists('love_artist', $_GET)) $degree = 2;
+		
 			if (!array_key_exists('username', $_SESSION))
 			{
 				Page::printError("You are not logged in. The requested action cannot be done.");
@@ -42,28 +48,17 @@ class BrowseArtistsPage extends Page {
 				return;
 			}
 			$albums = Artist::getAlbumsOfArtist($artist_id);
-			if(array_key_exists('like_artist', $_GET))
-			{
-				User::likeArtist($_SESSION['userid'], $artist_id, 1);
-				foreach($albums as $album){
-					User::likeAlbum($_SESSION['userid'], $artist_id, $album['album_name'], 1);
-					$songs = $songs = Album::getSongsOnAlbum($album['artist_id'],$album['album_name']);
-					foreach($songs as $song){
-						User::likeSong($_SESSION['userid'], $artist_id, $album['album_name'], $song['song_name'], 1);
-					}
+			
+			User::likeArtist($_SESSION['userid'], $artist_id, $degree);
+			foreach($albums as $album){
+				User::likeAlbum($_SESSION['userid'], $artist_id, $album['album_name'], $degree);
+				$songs = $songs = Album::getSongsOnAlbum($album['artist_id'],$album['album_name']);
+				foreach($songs as $song){
+					User::likeSong($_SESSION['userid'], $artist_id, $album['album_name'], $song['song_name'], $degree);
 				}
 			}
-			else
-			{
-				User::likeArtist($_SESSION['userid'], $artist_id, 2);
-				foreach($albums as $album){
-					User::likeAlbum($_SESSION['userid'], $artist_id, $album['album_name'], 2);
-					$songs = $songs = Album::getSongsOnAlbum($album['artist_id'],$album['album_name']);
-					foreach($songs as $song){
-						User::likeSong($_SESSION['userid'], $artist_id, $album['album_name'], $song['song_name'], 2);
-					}
-				}
-			}
+			
+			
 		}
 		
 		if (array_key_exists('username', $_SESSION))
@@ -85,11 +80,14 @@ class BrowseArtistsPage extends Page {
 		<?php
 
 		foreach ($artists as $artist) {
-			$liked = false;
+			//Check current rating for this artist
+			$rating = 0;
 			if (array_key_exists('userid', $_SESSION)) {				
 				foreach ($artists_like as $artist_like) {
-					if($artist_like['artist_id'] == $artist['id']) {
-						$liked = true;
+					print_r($artist_like);
+					if($artist_like['artist_id'] == $artist['id'])
+					{
+						$rating = $artist_like['rating'];
 					}
 				}
 			}
@@ -104,23 +102,21 @@ class BrowseArtistsPage extends Page {
 				<?php echo $artist['founded_in']; ?>
 				</td>
 				<?php
-					if(!$liked){
+					if($rating == 0){
 					?>
-				<td>
-				<?php makeButton('artist','like',$artist['id']); ?>
-				</td>
-				<td>
-				<?php makeButton('artist','love',$artist['id']); ?>
-				</td>
-				<?php
+						<td>
+						<?php makeButton('artist','like',$artist['id']); ?>
+						</td>
+						<td>
+						<?php makeButton('artist','love',$artist['id']); ?>
+						</td>
+						<?php
 					}
 					else
 					{
-					?>
-				<td colspan=2>
-				Liked
-				</td>
-				<?php
+						echo ("<td>");
+						showLikeOptionButtons('artist',$rating,$artist['id']);
+						echo ("</td>");					
 					}
 					?>
 			</tr>

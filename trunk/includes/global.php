@@ -38,9 +38,61 @@ function makeButton($type='song',$degree='like',$artist_id=NULL,$album_name=NULL
 			<a href='?<?php echo $degree; ?>_artist&artist_id=<?php echo $artist_id; ?>'><img border ='0' src="img/<?php echo $degree; ?>_button.png" /></a>
 		<?php
 	}
-
 	
 
+}
+
+function showLikeOptionButtons($type='song',$rating=1,$artist_id=NULL,$album_name=NULL,$song_name=NULL)
+{
+
+	//Nothing, Liked or Loved?
+	if ($rating == 0) return;
+	
+	if ($rating == 1)
+	{
+		$degree1 = 'unlike';
+		$degree2 = 'love';
+	}
+	elseif ($rating == 2)
+	{
+		$degree1 = 'like';
+		$degree2 = 'unlove';		
+	}
+
+	//Song, Album, or Artist? Add relevant info.
+	
+	if ($type == "song")
+	{
+		
+		
+		?>
+		<a href='?<?php echo $degree1; ?>_song&song_name=<?php echo $song_name; ?>&album_name=<?php echo $album_name; ?>&artist_id=<?php echo $artist_id; ?>'><img border='0' src="img/<?php echo $degree1; ?>_button.png" /></a>
+		<a href='?<?php echo $degree2; ?>_song&song_name=<?php echo $song_name; ?>&album_name=<?php echo $album_name; ?>&artist_id=<?php echo $artist_id; ?>'><img border='0' src="img/<?php echo $degree2; ?>_button.png" /></a>
+		<?php
+	}
+	
+	if ($type == "album")
+	{
+		?>
+		<a href='?<?php echo $degree1;?>_album&album_name=
+		<?php echo urlencode($album_name); ?>&artist_id=<?php echo $artist_id; ?>'><img border='0' src="img/<?php echo $degree1; ?>_button.png" /></a>
+	
+		<a href='?<?php echo $degree2;?>_album&album_name=
+		<?php echo urlencode($album_name); ?>&artist_id=<?php echo $artist_id; ?>'><img border='0' src="img/<?php echo $degree2; ?>_button.png" /></a>
+	
+		<?php
+	}
+	
+	if ($type == "artist")
+	{
+		?>
+			<a href='?<?php echo $degree1; ?>_artist&artist_id=<?php echo $artist_id; ?>'><img border ='0' src="img/<?php echo $degree1; ?>_button.png" /></a>
+		<?php
+		?>
+			<a href='?<?php echo $degree2; ?>_artist&artist_id=<?php echo $artist_id; ?>'><img border ='0' src="img/<?php echo $degree2; ?>_button.png" /></a>
+		<?php
+	}
+	
 }
 
 // Open up the database connection.

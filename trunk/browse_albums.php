@@ -12,8 +12,15 @@ class BrowseAlbumsPage extends Page {
 		// Todo: add search parameters & pagination
 		$albums = Album::getAll();
 		
-		if (array_key_exists('like_album', $_GET) || array_key_exists('love_album', $_GET))
+		if (array_key_exists('like_album', $_GET) || array_key_exists('love_album', $_GET)
+		|| array_key_exists('unlike_album', $_GET) || array_key_exists('unlove_album', $_GET))
 		{
+		
+			$degree = 0;
+			if (array_key_exists('like_album', $_GET)) $degree = 1;
+			if (array_key_exists('love_album', $_GET)) $degree = 2;
+			
+		
 			if (!array_key_exists('username', $_SESSION))
 			{
 				Page::printError("You are not logged in. The requested action cannot be done.");
@@ -40,23 +47,15 @@ class BrowseAlbumsPage extends Page {
 				Page::printError("The album you are looking for does not exist - you may have reached this page in error.");
 				return;
 			}
+			
+			//Set album to proper rating and rate all of its songs the same too.
 			$songs = Album::getSongsOnAlbum($artist_id,$album_name);
-			if(array_key_exists('like_album', $_GET))
+			User::likeAlbum($_SESSION['userid'], $artist_id, $album_name, $degree);
+			foreach($songs as $song)
 			{
-				User::likeAlbum($_SESSION['userid'], $artist_id, $album_name, 1);
-				foreach($songs as $song)
-				{
-					User::likeSong($_SESSION['userid'], $artist_id, $album_name, $song['song_name'], 1);
-				}
+				User::likeSong($_SESSION['userid'], $artist_id, $album_name, $song['song_name'], $degree);
 			}
-			else
-			{
-				User::likeAlbum($_SESSION['userid'], $artist_id, $album_name, 2);
-				foreach($songs as $song)
-				{
-					User::likeSong($_SESSION['userid'], $artist_id, $album_name, $song['song_name'], 2);
-				}
-			}
+		
 		}
 		
 		if (array_key_exists('username', $_SESSION))
@@ -75,14 +74,16 @@ class BrowseAlbumsPage extends Page {
 		<?php
 
 		foreach ($albums as $album) {
-			$liked = false;
+			$rating = 0;
 			if (array_key_exists('userid', $_SESSION)) {
 				foreach ($albums_like as $album_like) {
-					if($album_like['album_name'] == $album['album_name']) {
-						$liked = true;
+					if($album_like['album_name'] == $album['album_name'] && $album['artist_id'] == $album_like['artist_id']) {
+					$rating = $album_like['rating'];
 					}
+						
 				}
 			}
+		
 			?>
 			
 			<tr>
@@ -98,7 +99,8 @@ class BrowseAlbumsPage extends Page {
 				<?php echo $album['release_date']; ?>
 				</td>
 				<?php
-					if(!$liked){
+				echo ("rating is " .$rating);
+					if($rating==0){
 					?>
 				<td>
 					<?php makeButton('album','like',$album['artist_id'],$album['album_name']); ?>
@@ -110,11 +112,9 @@ class BrowseAlbumsPage extends Page {
 					}
 					else
 					{
-					?>
-				<td>
-				Liked
-				</td>
-				<?php
+					echo ("<td>");
+					showLikeOptionButtons('album',$rating,$album['artist_id'],$album['album_name']);
+					echo ("</td>");
 					}
 					?>
 				

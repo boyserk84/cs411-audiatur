@@ -10,7 +10,7 @@ require 'models/song.php';
 
 define('ACTION_DEFAULT', 1);
 define('ACTION_SONG', 2);
-
+define('ACTION_DELETED', 3);
 
 class EditSongsPage extends Page {
 	function handleActions() {		
@@ -20,8 +20,10 @@ class EditSongsPage extends Page {
 			$errors = Song::updateFromPost();	
 			$action = ACTION_SONG;			
 		} elseif (array_key_exists('edit', $_GET)) {
-
 			$action = ACTION_SONG;
+		} elseif (array_key_exists('delete', $_GET)) {
+			Song::delete($_GET['artist_id'], $_GET['album_name'], $_GET['delete']);
+			$action = ACTION_DELETED;
 		}
 
 		if (sizeof($errors) > 0) {
@@ -43,6 +45,8 @@ class EditSongsPage extends Page {
 			EditSongsPage::manage();
 		} elseif ($action == ACTION_SONG) {
 			EditSongsPage::edit($_GET['album_name'],(int)$_GET['artist_id'],$_GET['edit']);
+		} elseif ($action == ACTION_DELETED) {
+			echo "This song has been deleted. <a href='admin_albums.php?artist_id=" . $_GET['artist_id'] . "&edit=" . urlencode($_GET['album_name']) . "'>Go back</a>";
 		}
 	}		
 	

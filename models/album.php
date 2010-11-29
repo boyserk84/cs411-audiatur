@@ -39,12 +39,12 @@ class Album extends Model
 		return Database::resultToArray($qry);
 	}
 	
-		function insertFromPost() {
-		Album::insertFromData($_POST);
+	function insertFromPost() {
+		return Album::insertFromData($_POST);
 	}
 
 	function updateFromPost() {
-	//	Album::updateFromData($_POST);
+		return Album::updateFromData($_POST);
 	}
 
 	function insertFromData($data) {
@@ -54,28 +54,41 @@ class Album extends Model
 
 		$sql = "INSERT INTO albums (album_name, release_date, artist_id) VALUES ('$cName', '$cDate', $cArtistId)";
 
-		mysql_query($sql) or die($sql . "-->" . mysql_error());
+		if (!mysql_query($sql)) {
+			return array("ERROR! Album name is a duplicate.");
+		}
 		
 		// Todo: do validation.
-		return array();
+		return array("Album successfully added.");
 	}
 
 	function updateFromData($data) {
-	/*
-		$cName = mysql_real_escape_string($data['song_name']);
-		$cDuration = mysql_real_escape_string($data['duration']);
-		$cArtistId = (int)($data['artist_id']);
-		$cAlbumName = mysql_real_escape_string($data['album_name']);
-		$cOldSongName = mysql_real_escape_string($data['old_name']);
-		$sql = "UPDATE songs SET song_name='$cName', duration='$cDuration' WHERE artist_id=$cArtistId AND album_name='$cAlbumName' AND song_name='$cOldSongName' LIMIT 1";
-		
+	
+		$cName = mysql_real_escape_string($data['album_name']);
+		$cReleaseDate = mysql_real_escape_string($data['release_date']);		
+		$cArtistId = (int)($data['artist_id']);				
+		$cOldName = mysql_real_escape_string($_GET['edit']);		
+		$sql = "UPDATE albums SET album_name='$cName', release_date='$cReleaseDate' WHERE artist_id=$cArtistId AND album_name='$cOldName' LIMIT 1";
+	//	echo $sql;
 		mysql_query($sql) or die($sql . "-->" . mysql_error());
 		
-		// Todo: do validation.
-		return array();
-		*/
+		$sql = "UPDATE songs SET album_name='$cName' WHERE artist_id=$cArtistId AND album_name='$cOldName'";
+		mysql_query($sql) or die($sql . "-->" . mysql_error());
+	
+	
+		return array("Album successfully edited. If you changed the name, go <a href='?edit=" . urlencode($data['album_name']) . "&artist_id=$cArtistId'>here</a>");
+	
 	}
 
+	function delete($name, $artist_id) {
+		$cName = mysql_real_escape_string($name);
+		$cArtistId = (int)$artist_id;
+		$sql = "DELETE FROM songs WHERE album_name='$cName' AND artist_id=$cArtistId";		
+		mysql_query($sql) or die(mysql_error());
+		
+		$sql = "DELETE FROM albums WHERE artist_id=$cArtistId AND album_name='$cName'";
+		mysql_query($sql) or die(mysql_error());
+	}
 
 }
 

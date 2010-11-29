@@ -92,7 +92,7 @@ class Artist extends Model
 
 
 	function insertFromPost() {
-		Artist::insertFromData($_POST);
+		return Artist::insertFromData($_POST);
 	}
 
 	function insertFromData($data) {
@@ -101,23 +101,41 @@ class Artist extends Model
 		$cYearFounded = (int)($data['year_founded']);
 		$sql = "INSERT INTO artists (name, description, founded_in) VALUES ('$cName', '$cDescription', $cYearFounded)";
 	
-		mysql_query($sql) or die($sql . "-->" . mysql_error());
+		if (!mysql_query($sql)) {
+			return array("ERROR! Artist name is a duplicate.");
+		}
 		
-		// Todo: do validation.
-		return array();
+		return array("Artist successfully added. <a href='?edit=" . mysql_insert_id() . "'>Edit</a>");
+	}
+	
+	function updateFromPost() {
+		return Artist::updateFromData($_POST);
 	}
 
 	function updateFromData($data) {
 		$id = (int)($data['artist_id']);
-		$cName = mysql_real_escape_string($data['artist_name']);
+		$cName = mysql_real_escape_string($data['artist_name']);		
 		$cDescription = mysql_real_escape_string($data['description']);
-		$cYearFounded = (int)($data['year_founded']);
-		$sql = "UPDATE artists SET name='$cName', description='$cDescription', founded_in='$cYearFounded' WHERE id=$id LIMIT 1";
+		$cYearFounded = (int)($data['founded_in']);
+		$sql = "UPDATE artists SET name='$cName', description='$cDescription', founded_in='$cYearFounded' WHERE id=$id LIMIT 1";		
 		
-		mysql_query($sql) or die($sql . "-->" . mysql_error());
+		if (!mysql_query($sql)) {
+			return array(mysql_error());
+		}
 		
-		// Todo: do validation.
-		return array();
+		return array("Artist edited successfully.");
+	}
+	
+	function delete($artist_id) {		
+		$cArtistId = (int)$artist_id;
+		$sql = "DELETE FROM songs WHERE artist_id=$cArtistId";		
+		mysql_query($sql) or die(mysql_error());
+		
+		$sql = "DELETE FROM albums WHERE artist_id=$cArtistId";
+		mysql_query($sql) or die(mysql_error());
+		
+		$sql = "DELETE FROM artists WHERE id=$cArtistId";
+		mysql_query($sql) or die(mysql_error());
 	}
 }
 

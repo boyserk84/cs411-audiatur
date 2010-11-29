@@ -20,7 +20,7 @@ function makeButton($type='song',$degree='like',$artist_id=NULL,$album_name=NULL
 	if ($type == "song")
 	{
 	?>
-	<a href='?<?php echo $degree; ?>_song&song_name=<?php echo $song_name; ?>&album_name=<?php echo $album_name; ?>&artist_id=<?php echo $artist_id; ?>'><img border='0' src="img/<?php echo $degree; ?>_button.png" /></a>
+	<a href='?<?php echo $degree; ?>_song&song_name=<?php echo urlencode($song_name); ?>&album_name=<?php echo urlencode($album_name); ?>&artist_id=<?php echo $artist_id; ?>'><img border='0' src="img/<?php echo $degree; ?>_button.png" /></a>
     <?php
 	}
 	
@@ -79,9 +79,9 @@ function showLikeOptionButtons($type='song',$rating=1,$artist_id=NULL,$album_nam
 	if ($type == "song")
 	{		
 		?>
-		<a href='?<?php echo $degree1; ?>_song&song_name=<?php echo $song_name; ?>&album_name=<?php echo $album_name; ?>&artist_id=<?php echo $artist_id; ?>'><img border='0' src="img/<?php echo $degree1; ?>_button.png" /></a>
+		<a href='?<?php echo $degree1; ?>_song&song_name=<?php echo $song_name; ?>&album_name=<?php echo urlencode($album_name); ?>&artist_id=<?php echo $artist_id; ?>'><img border='0' src="img/<?php echo $degree1; ?>_button.png" /></a>
 		</td><td>
-		<a href='?<?php echo $degree2; ?>_song&song_name=<?php echo $song_name; ?>&album_name=<?php echo $album_name; ?>&artist_id=<?php echo $artist_id; ?>'><img border='0' src="img/<?php echo $degree2; ?>_button.png" /></a>
+		<a href='?<?php echo $degree2; ?>_song&song_name=<?php echo $song_name; ?>&album_name=<?php echo urlencode($album_name); ?>&artist_id=<?php echo $artist_id; ?>'><img border='0' src="img/<?php echo $degree2; ?>_button.png" /></a>
 		<?php
 	}
 	

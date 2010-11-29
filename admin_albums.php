@@ -89,7 +89,7 @@ class EditAlbumsPage extends Page {
 		<tr>
 			<td><?php echo $song['song_name']; ?></td>
 			<td><?php echo $song['duration']; ?></td>
-			<td><a href='admin_songs.php?edit=<?php echo $song['song_name']; ?>&album_name=<?php echo $album_name;?>&artist_id=<?php echo $artist_id;?>'>Edit</a></td>
+			<td><a href='admin_songs.php?edit=<?php echo urlencode($song['song_name']); ?>&album_name=<?php echo urlencode($album_name);?>&artist_id=<?php echo $artist_id;?>'>Edit</a></td>
 		</tr>
 			<?php			
 		}			

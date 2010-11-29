@@ -8,9 +8,12 @@ require_once('models/album.php');
 class BrowseArtistsPage extends Page {
 	var $title = "Browse Artists";
 
-	function content() {
-		// Todo: add search parameters & pagination
-		$artists = Artist::getAll();
+	function content() {	
+		if (array_key_exists('keyword', $_GET)) {
+			$artists = Artist::getAll($_GET['keyword']);
+		} else {
+			$artists = Artist::getAll();
+		}
 		
 		if (array_key_exists('like_artist', $_GET) || array_key_exists('love_artist', $_GET))
 		{
@@ -69,6 +72,10 @@ class BrowseArtistsPage extends Page {
 			$artists_like = $artists;
 		?>
 	
+		<form action='' method='get'>
+		Narrow down your results: <input type=text name=keyword value="<?php echo htmlspecialchars(@$_GET['keyword']); ?>"/> <input type=submit value="Go" /> <a href='?'>[Clear]</a>
+		</form>
+		
 		<table class='browse'>
 			<tr>				
 				<th>Artist Name</th>
@@ -88,7 +95,7 @@ class BrowseArtistsPage extends Page {
 			}
 			?>
 			
-			<tr>
+			<tr class='row<?php echo $c = ++$c % 2; ?>'>
 				<td>
 				<a href='view_artist.php?artist_id=<?php echo $artist['id']; ?>'>
 				<?php echo $artist['name']; ?></a>
@@ -110,7 +117,7 @@ class BrowseArtistsPage extends Page {
 					else
 					{
 					?>
-				<td>
+				<td colspan=2>
 				Liked
 				</td>
 				<?php

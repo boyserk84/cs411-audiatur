@@ -9,8 +9,11 @@ class BrowseSongsPage extends Page {
 	var $title = "Browse Songs";
 
 	function content() {
-		// Todo: add search parameters & pagination
-		$songs = Song::getAllSongs();
+		$page = @(int)$_GET['p'];		
+		$countPerPage = 40;
+		$start = $page * $countPerPage;
+		$songs = Song::getAllSongs(@$_GET['keyword'], $start, $countPerPage);
+		
 		
 		if (array_key_exists('like_song', $_GET) || array_key_exists('love_song', $_GET))
 		{
@@ -50,6 +53,18 @@ class BrowseSongsPage extends Page {
 		
 		?>
 	
+		<form action='' method='get'>
+		Narrow down your results: <input type=text name=keyword value="<?php echo htmlspecialchars(@$_GET['keyword']); ?>"/> <input type=submit value="Go" /> <a href='?'>[Clear]</a>
+		</form>
+	
+		<div align="center" id="pagination">
+			<?php $p = @$_GET['p'] + 1;  ?>
+			<?php if ($p > 0) { ?>
+				<a href='?keyword=<?php echo @$_GET['keyword']; ?>&p=0'>First Page</a>
+				<a href='?keyword=<?php echo @$_GET['keyword']; ?>&p=<?php echo $p - 2; ?>'>Previous Page</a>  <?php } ?>
+			
+			Page <?php echo $p; ?> <a href='?keyword=<?php echo @$_GET['keyword']; ?>&p=<?php echo $p; ?>'>Next Page</a>
+		</div>
 		<table class='browse'>
 			<tr>
 				<th>Song Name</th>
@@ -67,7 +82,7 @@ class BrowseSongsPage extends Page {
 				}
 			?>
 			
-			<tr>
+			<tr class='row<?php echo $c = ++$c % 2; ?>'>
 				<td>
 				<a href='view_song.php?song_name=<?php echo urlencode($song['song_name']); ?>&album_name=<?php echo urlencode($song['album_name']); ?>&artist_id=<?php echo $song['artist_id']; ?>'>
 				<?php echo cleanSongName($song['song_name']); ?></a>
@@ -93,7 +108,7 @@ class BrowseSongsPage extends Page {
 					else
 					{
 					?>
-				<td>
+				<td colspan=2>
 				Liked
 				</td>
 				<?php
